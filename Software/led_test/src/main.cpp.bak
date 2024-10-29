@@ -3,6 +3,7 @@
 
 // FastLED
 #include <FastLED.h>
+#include <Adafruit_NeoPixel.h>
 #define NUM_LEDS 2
 
 // Elegant OTA 
@@ -13,7 +14,7 @@
 
 const char* ssid = "test_wifi";
 const char* password = "test_password";
-CRGB leds[NUM_LEDS];
+Adafruit_NeoPixel pixels(2, LEDS, NEO_GRB + NEO_KHZ800);
 
 WebServer server(80);
 
@@ -70,20 +71,6 @@ void right_counter_update(){
 }
 void setup() {
 
-  // Encoders
-  pinMode(E1A, INPUT);
-  pinMode(E1B, INPUT);
-  pinMode(E2A, INPUT);
-  pinMode(E2A, INPUT);
-
-  // Motor
-  pinMode(ME1A, OUTPUT);
-  pinMode(ME1B, OUTPUT);
-  pinMode(ME2A, OUTPUT);
-  pinMode(ME2B, OUTPUT);
-
-  attachInterrupt(E1A, left_counter_update, RISING);
-  attachInterrupt(E2A, right_counter_update, RISING);
   Serial.begin(115200);
 
   WiFi.mode(WIFI_STA);
@@ -110,72 +97,23 @@ void setup() {
   server.begin();
   Serial.println("HTTP server started");
 
-  FastLED.addLeds<WS2812, LEDS, RGB>(leds, NUM_LEDS);  // GRB ordering is assumed
+  pixels.begin();
 }
-
-// Forward
-void forward(int distance, int speed, int decay) {
-  // Soft start/stop
-  digitalWrite(ME1A, HIGH);
-  digitalWrite(ME2A, LOW);
-  for (int i=150; i < speed; ++i){
-    analogWrite(ME1B, 255-i);
-    analogWrite(ME2B, i);
-    delay(decay);
-  }
-  delay(10000); // TODO: calculate distance based on encoder readings
-
-  for (int i=speed; i > 150; --i){
-      analogWrite(ME1B, 255-i);
-      analogWrite(ME2B, i);
-      delay(decay);
-    }
-  analogWrite(ME1B, 255);
-  analogWrite(ME2B, 0);
-  delay(10);
-}
-
-// Backward
-void backward(int distance, int speed, int decay) {
-  // Soft start/stop
-  digitalWrite(ME1A, LOW);
-  digitalWrite(ME2A, HIGH);
-  for (int i=150; i < speed; ++i){
-    analogWrite(ME1B, i);
-    analogWrite(ME2B, 255-i);
-    delay(decay);
-  }
-  delay(10000); // TODO: calculate distance based on encoder readings
-
-  for (int i=speed; i > 150; --i){
-      analogWrite(ME1B, i);
-      analogWrite(ME2B, 255-i);
-      delay(decay);
-    }
-  analogWrite(ME1B, 0);
-  analogWrite(ME2B, 255);
-  delay(10);
-
-}
-
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  // while (i < 3){ 
-  //   forward(10, 200, 5);
-  //   delay(500);
-  //   backward(10, 200, 5);
-  //   delay(500);
-  //   ++i;
-  // }
-    // Turn the LED on, then pause
-  leds[1] = CRGB::Red;
-  FastLED.show();
+  pixels.clear(); // Set all pixel colors to 'off'
+
+  // The first NeoPixel in a strand is #0, second is 1, all the way up
+  // to the count of pixels minus one.
+  for(int i=0; i<2; i++) { // For each pixel...
+
+    // pixels.Color() takes RGB values, from 0,0,0 up to 255,255,255
+    // Here we're using a moderately bright green color:
+    pixels.setPixelColor(i, pixels.Color(0, 150, 0));
+
+    pixels.show();   // Send the updated pixel colors to the hardware.
   delay(500);
-  // Now turn the LED off, then pause
-  leds[0] = CRGB::Black;
-  FastLED.show();
-  delay(500);
+  }
 
   server.handleClient();
   ElegantOTA.loop();
