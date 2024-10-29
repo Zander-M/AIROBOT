@@ -2,7 +2,9 @@
 
 void wheel_setup();
 void wheel_run();
-void setMotor(int dir, int pwmVal);
-void setTarget(int target);
+void setLeftMotor(int dir, int pwmVal);
+void setRightMotor(int dir, int pwmVal);
+void setLeftTarget(int target);
+void setRightTarget(int target);
 void readLeftEncoder();
 void readRightEncoder();

@@ -98,8 +98,13 @@ void setup() {
 void loop() {
   recvWithEndMarker();
   if (newData) {
-    setTarget(0);
-    setTarget(atoi(dataString));
+    if (dataString[0] == 'l'){
+      setLeftTarget(0);
+      setLeftTarget(atoi(&dataString[1]));
+    } else {
+      setRightTarget(0);
+      setRightTarget(atoi(&dataString[1]));
+    }
     newData = false;
   }
   wheel_run();

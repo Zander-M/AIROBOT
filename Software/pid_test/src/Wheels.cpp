@@ -3,11 +3,15 @@
 #include "pinout.h"
 
 // Initial setup
-volatile int pos = 0; // specify posi as volatile: https://www.arduino.cc/reference/en/language/variables/variable-scope-qualifiers/volatile/
-volatile int target = 0;
+volatile int l_pos = 0; // specify posi as volatile: https://www.arduino.cc/reference/en/language/variables/variable-scope-qualifiers/volatile/
+volatile int r_pos = 0; // specify posi as volatile: https://www.arduino.cc/reference/en/language/variables/variable-scope-qualifiers/volatile/
+volatile int l_target = 0;
+volatile int r_target = 0;
 long prevT = 0;
-float eprev = 0;
-float eintegral = 0;
+float l_eprev = 0;
+float l_eintegral = 0;
+float r_eprev = 0;
+float r_eintegral = 0;
 
 // PID parameter
 float kp = 100;
@@ -43,43 +47,62 @@ void wheel_run() {
   // see: https://www.arduino.cc/reference/en/language/variables/variable-scope-qualifiers/volatile/
   
   // error
-  int e = pos - target;
+  int l_e = l_pos - l_target;
+  int r_e = r_pos - r_target;
 
   // derivative
-  float dedt = (e-eprev)/(deltaT);
+  float l_dedt= (l_e-l_eprev)/(deltaT);
+  float r_dedt = (r_e-r_eprev)/(deltaT);
 
   // integral
-  eintegral = eintegral + e*deltaT;
+  l_eintegral = l_eintegral + l_e*deltaT;
+  r_eintegral = r_eintegral + r_e*deltaT;
 
   // control signal
-  float u = kp*e + kd*dedt + ki*eintegral;
+  float l_u = kp*l_e + kd*l_dedt + ki*l_eintegral;
+  float r_u = kp*r_e + kd*r_dedt + ki*r_eintegral;
 
   // motor power
-  float pwr = fabs(u);
-  if( pwr > 255 ){
-    pwr = 255;
+  float l_pwr = fabs(l_u);
+  if( l_pwr > 255 ){
+    l_pwr = 255;
+  }
+
+  float r_pwr = fabs(r_u);
+  if( r_pwr > 255 ){
+    r_pwr = 255;
   }
 
   // motor direction
-  int dir = 1;
-  if(u<0){
-    dir = -1;
+  int l_dir = 1;
+  if(l_u<0){
+    l_dir = -1;
   }
 
-  // signal the motor
-  setMotor(dir,pwr);
-
+  int r_dir = -1;
+  if(r_u<0){
+    r_dir = 1;
+  }
 
   // store previous error
-  eprev = e;
+  l_eprev = l_e;
+  r_eprev = r_e;
 
-  Serial.print(target);
+  // signal the motor
+  setLeftMotor(l_dir,l_pwr);
+  setRightMotor(r_dir,r_pwr);
+
+  Serial.print(l_target);
   Serial.print(" ");
-  Serial.print(pos);
+  Serial.print(l_pos);
+  Serial.print(" ");
+  Serial.print(r_target);
+  Serial.print(" ");
+  Serial.print(r_pos);
   Serial.println();
 }
 
-void setMotor(int dir, int pwmVal){
+void setLeftMotor(int dir, int pwmVal){
   if(dir == -1){
     digitalWrite(ME1A,LOW);
     analogWrite(ME1B,pwmVal);
@@ -94,26 +117,45 @@ void setMotor(int dir, int pwmVal){
   }  
 }
 
+void setRightMotor(int dir, int pwmVal){
+  if(dir == -1){
+    digitalWrite(ME2A,LOW);
+    analogWrite(ME2B,pwmVal);
+  }
+  else if(dir == 1){
+    digitalWrite(ME2A, HIGH);
+    analogWrite(ME2B,255-pwmVal);
+  }
+  else{
+    digitalWrite(ME2A,LOW);
+    analogWrite(ME2B,0);
+  }  
+}
+
 void readLeftEncoder(){
   int b = digitalRead(E1B);
   if(b > 0){
-    pos++;
+    l_pos++;
   }
   else{
-    pos--;
+    l_pos--;
   }
 }
 
 void readRightEncoder(){
   int b = digitalRead(E2B);
   if(b > 0){
-    pos++;
+    r_pos--;
   }
   else{
-    pos--;
+    r_pos++;
   }
 }
 
-void setTarget(int targetVal){
-    target = targetVal;
+void setLeftTarget(int targetVal){
+    l_target = targetVal;
+}
+
+void setRightTarget(int targetVal){
+    r_target = targetVal;
 }
