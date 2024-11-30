@@ -1,0 +1,3 @@
+[submodule "ESP_MESH/esp-mdf"]
+	path = ESP_MESH/esp-mdf
+	url = https://github.com/espressif/esp-mdf/
