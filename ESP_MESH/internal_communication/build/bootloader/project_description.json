@@ -1,0 +1,20 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "/home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject",
+    "build_dir":          "/home/zdrrrm/Projects/AIROBOT/ESP_MESH/internal_communication/build/bootloader",
+    "config_file":        "/home/zdrrrm/Projects/AIROBOT/ESP_MESH/internal_communication/sdkconfig",
+    "config_defaults":    "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "v4.3.1",
+    "target":             "esp32",
+    "phy_data_partition": "",
+    "monitor_baud" :      "115200",
+    "monitor_toolprefix": "xtensa-esp32-elf-",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "/home/zdrrrm/ESP32/esp-idf/components/efuse/Kconfig;/home/zdrrrm/ESP32/esp-idf/components/esp32/Kconfig;/home/zdrrrm/ESP32/esp-idf/components/esp_common/Kconfig;/home/zdrrrm/ESP32/esp-idf/components/esp_system/Kconfig;/home/zdrrrm/ESP32/esp-idf/components/log/Kconfig;/home/zdrrrm/ESP32/esp-idf/components/newlib/Kconfig;/home/zdrrrm/ESP32/esp-idf/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/home/zdrrrm/ESP32/esp-idf/components/bootloader/Kconfig.projbuild;/home/zdrrrm/ESP32/esp-idf/components/esptool_py/Kconfig.projbuild;/home/zdrrrm/ESP32/esp-idf/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp32", "esp_common", "esp_hw_support", "esp_rom", "esp_system", "esptool_py", "hal", "log", "main", "micro-ecc", "newlib", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "/home/zdrrrm/ESP32/esp-idf/components/bootloader", "/home/zdrrrm/ESP32/esp-idf/components/bootloader_support", "/home/zdrrrm/ESP32/esp-idf/components/efuse", "/home/zdrrrm/ESP32/esp-idf/components/esp32", "/home/zdrrrm/ESP32/esp-idf/components/esp_common", "/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support", "/home/zdrrrm/ESP32/esp-idf/components/esp_rom", "/home/zdrrrm/ESP32/esp-idf/components/esp_system", "/home/zdrrrm/ESP32/esp-idf/components/esptool_py", "/home/zdrrrm/ESP32/esp-idf/components/hal", "/home/zdrrrm/ESP32/esp-idf/components/log", "/home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject/main", "/home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject/components/micro-ecc", "/home/zdrrrm/ESP32/esp-idf/components/newlib", "/home/zdrrrm/ESP32/esp-idf/components/partition_table", "/home/zdrrrm/ESP32/esp-idf/components/soc", "/home/zdrrrm/ESP32/esp-idf/components/spi_flash", "/home/zdrrrm/ESP32/esp-idf/components/xtensa", "" ]
+}
