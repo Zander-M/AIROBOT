@@ -1,0 +1,141 @@
+[1/845] Building C object esp-idf/esp_bootloader_format/CMakeFiles/__idf_esp_bootloader_format.dir/esp_bootloader_desc.c.obj
+[2/845] Building C object esp-idf/app_update/CMakeFiles/__idf_app_update.dir/esp_ota_app_desc.c.obj
+[3/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32/esp_efuse_table.c.obj
+[4/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32/esp_efuse_fields.c.obj
+[5/845] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/mbedtls_debug.c.obj
+[6/845] Building C object esp-idf/esp_app_format/CMakeFiles/__idf_esp_app_format.dir/esp_app_desc.c.obj
+[7/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_fields.c.obj
+[8/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_startup.c.obj
+[9/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_mem.c.obj
+[10/845] Building C object esp-idf/esp_partition/CMakeFiles/__idf_esp_partition.dir/partition_target.c.obj
+[11/845] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/esp_platform_time.c.obj
+[12/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random.c.obj
+[13/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_efuse.c.obj
+[14/845] Building C object esp-idf/esp_partition/CMakeFiles/__idf_esp_partition.dir/partition.c.obj
+[15/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common.c.obj
+[16/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_api.c.obj
+[17/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/efuse_controller/keys/without_key_purposes/three_key_blocks/esp_efuse_api_key.c.obj
+[18/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_common_loader.c.obj
+[19/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_random_esp32.c.obj
+[20/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/esp32/esp_efuse_utility.c.obj
+[21/845] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj
+FAILED: esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj 
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc -DESP_PLATFORM -DIDF_VER=\"v5.3.2\" -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DSOC_MMU_PAGE_SIZE=CONFIG_MMU_PAGE_SIZE -DSOC_XTAL_FREQ_MHZ=CONFIG_XTAL_FREQ -D_GLIBCXX_HAVE_POSIX_SEMAPHORE -D_GLIBCXX_USE_POSIX_SEMAPHORE -D_GNU_SOURCE -D_POSIX_READER_WRITER_LOCKS -I/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/config -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/esp_crt_bundle/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library -I/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/esp-idf/mbedtls/mbedtls/library -I/home/zdrrrm/ESP32/esp-idf/components/newlib/platform_include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/config/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/config/include/freertos -I/home/zdrrrm/ESP32/esp-idf/components/freertos/config/xtensa/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/FreeRTOS-Kernel/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos -I/home/zdrrrm/ESP32/esp-idf/components/freertos/esp_additions/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/include/soc -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/include/soc/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/dma/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/ldo/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/port/esp32/. -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/port/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/heap/include -I/home/zdrrrm/ESP32/esp-idf/components/log/include -I/home/zdrrrm/ESP32/esp-idf/components/soc/include -I/home/zdrrrm/ESP32/esp-idf/components/soc/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/soc/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/hal/platform_port/include -I/home/zdrrrm/ESP32/esp-idf/components/hal/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/hal/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_rom/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_rom/include/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/esp_common/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_system/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_system/port/soc -I/home/zdrrrm/ESP32/esp-idf/components/esp_system/port/include/private -I/home/zdrrrm/ESP32/esp-idf/components/xtensa/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/xtensa/include -I/home/zdrrrm/ESP32/esp-idf/components/xtensa/deprecated_include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/include/apps -I/home/zdrrrm/ESP32/esp-idf/components/lwip/include/apps/sntp -I/home/zdrrrm/ESP32/esp-idf/components/lwip/lwip/src/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/freertos/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/esp32xx/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/esp32xx/include/arch -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/esp32xx/include/sys -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/3rdparty/everest/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/3rdparty/p256-m -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/3rdparty/p256-m/p256-m -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow -Wformat-signedness -Wformat-overflow=2 -Wformat-truncation -Werror -Wmissing-declarations -ffunction-sections -fdata-sections -Wall -Werror=all -Wno-error=unused-function -Wno-error=unused-variable -Wno-error=unused-but-set-variable -Wno-error=deprecated-declarations -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-enum-conversion -gdwarf-4 -ggdb -Og -fno-shrink-wrap -fmacro-prefix-map=/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test=. -fmacro-prefix-map=/home/zdrrrm/ESP32/esp-idf=/IDF -fstrict-volatile-bitfields -fno-jump-tables -fno-tree-switch-conversion -std=gnu17 -Wno-old-style-declaration -MD -MT esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj -MF esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj.d -o esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj -c /home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c
+In file included from /home/zdrrrm/ESP32/esp-idf/components/newlib/platform_include/sys/dirent.h:68,
+                 from /home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:39,
+                 from /home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:68:
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/sys/dirent.h:10:2: error: #error "<dirent.h> not supported"
+ #error "<dirent.h> not supported"
+  ^~~~~
+In file included from /home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:68:
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:48:12: error: unknown type name 'DIR'
+ int  dirfd(DIR *);
+            ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:51:17: error: unknown type name 'DIR'
+ int  fdclosedir(DIR *);
+                 ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:53:1: error: unknown type name 'DIR'
+ DIR *opendir(const char *);
+ ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:54:1: error: unknown type name 'DIR'
+ DIR *fdopendir(int);
+ ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:56:11: error: unknown type name 'DIR'
+   readdir(DIR *);
+           ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:58:16: error: unknown type name 'DIR'
+ int  readdir_r(DIR *__restrict, struct dirent *__restrict,
+                ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:61:17: error: unknown type name 'DIR'
+ void  rewinddir(DIR *);
+                 ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:72:15: error: unknown type name 'DIR'
+ void  seekdir(DIR *, long);
+               ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:73:15: error: unknown type name 'DIR'
+ long  telldir(DIR *);
+               ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:76:15: error: unknown type name 'DIR'
+ int  closedir(DIR *);
+               ^~~
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c: In function 'mbedtls_x509_crt_parse_path':
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1599:5: error: unknown type name 'DIR'
+     DIR *dir = opendir(path);
+     ^~~
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1614:21: error: implicit declaration of function 'readdir'; did you mean 'scandir'? [-Werror=implicit-function-declaration]
+     while ((entry = readdir(dir)) != NULL) {
+                     ^~~~~~~
+                     scandir
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1614:19: error: assignment to 'struct dirent *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
+     while ((entry = readdir(dir)) != NULL) {
+                   ^
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1616:56: error: dereferencing pointer to incomplete type 'struct dirent'
+                                    "%s/%s", path, entry->d_name);
+                                                        ^~
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1652:5: error: implicit declaration of function 'closedir'; did you mean 'fdopendir'? [-Werror=implicit-function-declaration]
+     closedir(dir);
+     ^~~~~~~~
+     fdopendir
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c: At top level:
+cc1: error: unrecognized command line option '-Wno-enum-conversion' [-Werror]
+cc1: all warnings being treated as errors
+[22/845] Building C object esp-idf/efuse/CMakeFiles/__idf_efuse.dir/src/esp_efuse_utility.c.obj
+[23/845] Building C object esp-idf/esp_mm/CMakeFiles/__idf_esp_mm.dir/port/esp32/ext_mem_layout.c.obj
+[24/845] Building C object esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir/flash_brownout_hook.c.obj
+[25/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp32/secure_boot_secure_features.c.obj
+[26/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/flash_qio_mode.c.obj
+[27/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/secure_boot.c.obj
+[28/845] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/net_sockets.c.obj
+[29/845] Building C object esp-idf/esp_mm/CMakeFiles/__idf_esp_mm.dir/heap_align_hw.c.obj
+[30/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_partitions.c.obj
+[31/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash.c.obj
+[32/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_clock_init.c.obj
+[33/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/idf/bootloader_sha.c.obj
+[34/845] Building C object esp-idf/esp_mm/CMakeFiles/__idf_esp_mm.dir/cache_esp32.c.obj
+[35/845] Building C object esp-idf/app_update/CMakeFiles/__idf_app_update.dir/esp_ota_ops.c.obj
+[36/845] Building C object esp-idf/esp_mm/CMakeFiles/__idf_esp_mm.dir/esp_cache.c.obj
+[37/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/bootloader_flash/src/bootloader_flash_config_esp32.c.obj
+[38/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/esp_image_format.c.obj
+[39/845] Building C object esp-idf/spi_flash/CMakeFiles/__idf_spi_flash.dir/spi_flash_chip_generic.c.obj
+[40/845] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/bootloader_utility.c.obj
+[41/845] Building C object esp-idf/esp_mm/CMakeFiles/__idf_esp_mm.dir/esp_mmu_map.c.obj
+[42/845] Performing configure step for 'bootloader'
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/asio does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/cbor does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/coap does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/expat does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/libsodium does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/nghttp does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/tinyusb does not contain a CMakeLists.txt file. No component will be added
+-- Building ESP-IDF components for target esp32
+-- Project sdkconfig file /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig
+-- Compiler supported targets: xtensa-esp32-elf
+CMake Warning at /home/zdrrrm/ESP32/esp-idf/tools/cmake/tool_version_check.cmake:41 (message):
+  Can not get version for tool:
+  /home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc
+
+
+  Check Getting Started documentation or proceed at own risk.
+
+Call Stack (most recent call first):
+  /home/zdrrrm/ESP32/esp-idf/components/esp_common/project_include.cmake:10 (check_expected_tool_version)
+  /home/zdrrrm/ESP32/esp-idf/tools/cmake/build.cmake:400 (include)
+  /home/zdrrrm/ESP32/esp-idf/tools/cmake/build.cmake:632 (__build_process_project_includes)
+  /home/zdrrrm/ESP32/esp-idf/tools/cmake/project.cmake:710 (idf_build_process)
+  CMakeLists.txt:66 (project)
+
+
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
+-- Bootloader project name: "bootloader" version: 1
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject/main/ld/esp32/bootloader.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject/main/ld/esp32/bootloader.rom.ld
+-- Components: bootloader bootloader_support efuse esp_app_format esp_bootloader_format esp_common esp_hw_support esp_rom esp_system esptool_py freertos hal log main micro-ecc newlib partition_table soc spi_flash xtensa
+-- Component paths: /home/zdrrrm/ESP32/esp-idf/components/bootloader /home/zdrrrm/ESP32/esp-idf/components/bootloader_support /home/zdrrrm/ESP32/esp-idf/components/efuse /home/zdrrrm/ESP32/esp-idf/components/esp_app_format /home/zdrrrm/ESP32/esp-idf/components/esp_bootloader_format /home/zdrrrm/ESP32/esp-idf/components/esp_common /home/zdrrrm/ESP32/esp-idf/components/esp_hw_support /home/zdrrrm/ESP32/esp-idf/components/esp_rom /home/zdrrrm/ESP32/esp-idf/components/esp_system /home/zdrrrm/ESP32/esp-idf/components/esptool_py /home/zdrrrm/ESP32/esp-idf/components/freertos /home/zdrrrm/ESP32/esp-idf/components/hal /home/zdrrrm/ESP32/esp-idf/components/log /home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject/main /home/zdrrrm/ESP32/esp-idf/components/bootloader/subproject/components/micro-ecc /home/zdrrrm/ESP32/esp-idf/components/newlib /home/zdrrrm/ESP32/esp-idf/components/partition_table /home/zdrrrm/ESP32/esp-idf/components/soc /home/zdrrrm/ESP32/esp-idf/components/spi_flash /home/zdrrrm/ESP32/esp-idf/components/xtensa
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/bootloader
+ninja: build stopped: subcommand failed.

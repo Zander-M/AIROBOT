@@ -1,0 +1,316 @@
+[0/1] Re-running CMake...
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/asio does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/cbor does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/coap does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/expat does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/libsodium does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/nghttp does not contain a CMakeLists.txt file. No component will be added
+-- Component directory /home/zdrrrm/ESP32/esp-idf/components/tinyusb does not contain a CMakeLists.txt file. No component will be added
+-- Building ESP-IDF components for target esp32
+NOTICE: Dependencies lock doesn't exist, solving dependencies.
+....NOTICE: Updating lock file at /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/dependencies.lock
+NOTICE: Processing 3 dependencies:
+NOTICE: [1/3] espressif/bdc_motor (0.1.0)
+NOTICE: [2/3] espressif/pid_ctrl (0.1.1)
+NOTICE: [3/3] idf (5.3.2)
+-- Project sdkconfig file /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:22 CONFIG_APP_BUILD_TYPE_ELF_RAM was replaced with CONFIG_APP_BUILD_TYPE_RAM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:131 CONFIG_COMPILER_OPTIMIZATION_DEFAULT was replaced with CONFIG_COMPILER_OPTIMIZATION_DEBUG 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:290 CONFIG_ESP32_DEFAULT_CPU_FREQ_80 was replaced with CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_80 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:291 CONFIG_ESP32_DEFAULT_CPU_FREQ_160 was replaced with CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_160 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:292 CONFIG_ESP32_DEFAULT_CPU_FREQ_240 was replaced with CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_240 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:293 CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ was replaced with CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:294 CONFIG_ESP32_SPIRAM_SUPPORT was replaced with CONFIG_SPIRAM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:300 CONFIG_ESP32_ULP_COPROC_ENABLED was replaced with CONFIG_ULP_COPROC_ENABLED 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:301 CONFIG_ESP32_ULP_COPROC_RESERVE_MEM was replaced with CONFIG_ULP_COPROC_RESERVE_MEM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:302 CONFIG_ESP32_DEBUG_OCDAWARE was replaced with CONFIG_ESP_DEBUG_OCDAWARE 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:303 CONFIG_ESP32_BROWNOUT_DET was replaced with CONFIG_ESP_BROWNOUT_DET 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:304 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_0 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_0 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:305 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_1 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_1 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:306 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_2 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_2 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:307 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_3 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_3 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:308 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_4 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_4 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:309 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_5 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_5 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:310 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_6 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_6 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:311 CONFIG_ESP32_BROWNOUT_DET_LVL_SEL_7 was replaced with CONFIG_ESP_BROWNOUT_DET_LVL_SEL_7 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:312 CONFIG_ESP32_BROWNOUT_DET_LVL was replaced with CONFIG_ESP_BROWNOUT_DET_LVL 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:313 CONFIG_ESP32_REDUCE_PHY_TX_POWER was replaced with CONFIG_ESP_PHY_REDUCE_TX_POWER 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:314 CONFIG_ESP32_TIME_SYSCALL_USE_RTC_FRC1 was replaced with CONFIG_NEWLIB_TIME_SYSCALL_USE_RTC_HRT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:315 CONFIG_ESP32_TIME_SYSCALL_USE_RTC was replaced with CONFIG_NEWLIB_TIME_SYSCALL_USE_RTC 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:316 CONFIG_ESP32_TIME_SYSCALL_USE_FRC1 was replaced with CONFIG_NEWLIB_TIME_SYSCALL_USE_HRT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:317 CONFIG_ESP32_TIME_SYSCALL_USE_NONE was replaced with CONFIG_NEWLIB_TIME_SYSCALL_USE_NONE 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:318 CONFIG_ESP32_RTC_CLK_SRC_INT_RC was replaced with CONFIG_RTC_CLK_SRC_INT_RC 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:319 CONFIG_ESP32_RTC_CLK_SRC_EXT_CRYS was replaced with CONFIG_RTC_CLK_SRC_EXT_CRYS 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:320 CONFIG_ESP32_RTC_CLK_SRC_EXT_OSC was replaced with CONFIG_RTC_CLK_SRC_EXT_OSC 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:321 CONFIG_ESP32_RTC_CLK_SRC_INT_8MD256 was replaced with CONFIG_RTC_CLK_SRC_INT_8MD256 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:322 CONFIG_ESP32_RTC_CLK_CAL_CYCLES was replaced with CONFIG_RTC_CLK_CAL_CYCLES 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:323 CONFIG_ESP32_DEEP_SLEEP_WAKEUP_DELAY was replaced with CONFIG_ESP_SLEEP_WAIT_FLASH_READY_EXTRA_DELAY 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:324 CONFIG_ESP32_XTAL_FREQ_40 was replaced with CONFIG_XTAL_FREQ_40 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:325 CONFIG_ESP32_XTAL_FREQ_26 was replaced with CONFIG_XTAL_FREQ_26 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:326 CONFIG_ESP32_XTAL_FREQ_AUTO was replaced with CONFIG_XTAL_FREQ_AUTO 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:327 CONFIG_ESP32_XTAL_FREQ was replaced with CONFIG_XTAL_FREQ 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:329 CONFIG_ESP32_NO_BLOBS was replaced with CONFIG_APP_NO_BLOBS 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:330 CONFIG_ESP32_COMPATIBLE_PRE_V2_1_BOOTLOADERS was replaced with CONFIG_APP_COMPATIBLE_PRE_V2_1_BOOTLOADERS 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:331 CONFIG_ESP32_COMPATIBLE_PRE_V3_1_BOOTLOADERS was replaced with CONFIG_APP_COMPATIBLE_PRE_V3_1_BOOTLOADERS 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:364 CONFIG_ESP_TASK_WDT was replaced with CONFIG_ESP_TASK_WDT_INIT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:429 CONFIG_OTA_ALLOW_HTTP was replaced with CONFIG_ESP_HTTPS_OTA_ALLOW_HTTP 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:460 CONFIG_ESP_SYSTEM_PD_FLASH was replaced with CONFIG_ESP_SLEEP_POWER_DOWN_FLASH 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:482 CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM was replaced with CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:483 CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM was replaced with CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:484 CONFIG_ESP32_WIFI_STATIC_TX_BUFFER was replaced with CONFIG_ESP_WIFI_STATIC_TX_BUFFER 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:485 CONFIG_ESP32_WIFI_DYNAMIC_TX_BUFFER was replaced with CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:486 CONFIG_ESP32_WIFI_TX_BUFFER_TYPE was replaced with CONFIG_ESP_WIFI_TX_BUFFER_TYPE 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:487 CONFIG_ESP32_WIFI_DYNAMIC_TX_BUFFER_NUM was replaced with CONFIG_ESP_WIFI_DYNAMIC_TX_BUFFER_NUM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:488 CONFIG_ESP32_WIFI_CSI_ENABLED was replaced with CONFIG_ESP_WIFI_CSI_ENABLED 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:489 CONFIG_ESP32_WIFI_AMPDU_TX_ENABLED was replaced with CONFIG_ESP_WIFI_AMPDU_TX_ENABLED 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:490 CONFIG_ESP32_WIFI_TX_BA_WIN was replaced with CONFIG_ESP_WIFI_TX_BA_WIN 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:491 CONFIG_ESP32_WIFI_AMPDU_RX_ENABLED was replaced with CONFIG_ESP_WIFI_AMPDU_RX_ENABLED 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:492 CONFIG_ESP32_WIFI_RX_BA_WIN was replaced with CONFIG_ESP_WIFI_RX_BA_WIN 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:493 CONFIG_ESP32_WIFI_NVS_ENABLED was replaced with CONFIG_ESP_WIFI_NVS_ENABLED 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:494 CONFIG_ESP32_WIFI_TASK_PINNED_TO_CORE_0 was replaced with CONFIG_ESP_WIFI_TASK_PINNED_TO_CORE_0 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:495 CONFIG_ESP32_WIFI_TASK_PINNED_TO_CORE_1 was replaced with CONFIG_ESP_WIFI_TASK_PINNED_TO_CORE_1 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:496 CONFIG_ESP32_WIFI_SOFTAP_BEACON_MAX_LEN was replaced with CONFIG_ESP_WIFI_SOFTAP_BEACON_MAX_LEN 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:497 CONFIG_ESP32_WIFI_MGMT_SBUF_NUM was replaced with CONFIG_ESP_WIFI_MGMT_SBUF_NUM 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:504 CONFIG_ESP32_WIFI_IRAM_OPT was replaced with CONFIG_ESP_WIFI_IRAM_OPT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:505 CONFIG_ESP32_WIFI_RX_IRAM_OPT was replaced with CONFIG_ESP_WIFI_RX_IRAM_OPT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:506 CONFIG_ESP32_WIFI_ENABLE_WPA3_SAE was replaced with CONFIG_ESP_WIFI_ENABLE_WPA3_SAE 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:514 CONFIG_ESP32_PHY_CALIBRATION_AND_DATA_STORAGE was replaced with CONFIG_ESP_PHY_CALIBRATION_AND_DATA_STORAGE 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:515 CONFIG_ESP32_PHY_INIT_DATA_IN_PARTITION was replaced with CONFIG_ESP_PHY_INIT_DATA_IN_PARTITION 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:516 CONFIG_ESP32_PHY_MAX_WIFI_TX_POWER was replaced with CONFIG_ESP_PHY_MAX_WIFI_TX_POWER 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:517 CONFIG_ESP32_PHY_MAX_TX_POWER was replaced with CONFIG_ESP_PHY_MAX_TX_POWER 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:1118 CONFIG_WPA_MBEDTLS_CRYPTO was replaced with CONFIG_ESP_WIFI_MBEDTLS_CRYPTO 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:1119 CONFIG_WPA_WAPI_PSK was replaced with CONFIG_ESP_WIFI_WAPI_PSK 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:1120 CONFIG_WPA_DEBUG_PRINT was replaced with CONFIG_ESP_WIFI_DEBUG_PRINT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:1121 CONFIG_WPA_TESTING_OPTIONS was replaced with CONFIG_ESP_WIFI_TESTING_OPTIONS 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:1122 CONFIG_WPA_WPS_STRICT was replaced with CONFIG_ESP_WIFI_WPS_STRICT 
+/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/sdkconfig:1123 CONFIG_WPA_11KV_SUPPORT was replaced with CONFIG_ESP_WIFI_11KV_SUPPORT 
+-- Compiler supported targets: xtensa-esp32-elf
+-- Found Python3: /home/zdrrrm/.espressif/python_env/idf5.3_py3.10_env/bin/python (found version "3.10.13") found components: Interpreter 
+-- Looking for pthread.h
+-- Looking for pthread.h - found
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Check if compiler accepts -pthread
+-- Check if compiler accepts -pthread - no
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Could NOT find Threads (missing: Threads_FOUND) 
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS
+-- Performing Test C_COMPILER_SUPPORTS_WFORMAT_SIGNEDNESS - Success
+-- App "speed_control_test" version: fa3b469-dirty
+-- Adding linker script /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/esp-idf/esp_system/ld/memory.ld
+-- Adding linker script /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/esp-idf/esp_system/ld/sections.ld.in
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.api.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.libgcc.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-data.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.syscalls.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32/ld/esp32.rom.newlib-funcs.ld
+-- Adding linker script /home/zdrrrm/ESP32/esp-idf/components/soc/esp32/ld/esp32.peripherals.ld
+-- Components: app_trace app_update bootloader bootloader_support bt cmock console cxx driver efuse esp-tls esp_adc esp_app_format esp_bootloader_format esp_coex esp_common esp_driver_ana_cmpr esp_driver_cam esp_driver_dac esp_driver_gpio esp_driver_gptimer esp_driver_i2c esp_driver_i2s esp_driver_isp esp_driver_jpeg esp_driver_ledc esp_driver_mcpwm esp_driver_parlio esp_driver_pcnt esp_driver_ppa esp_driver_rmt esp_driver_sdio esp_driver_sdm esp_driver_sdmmc esp_driver_sdspi esp_driver_spi esp_driver_touch_sens esp_driver_tsens esp_driver_uart esp_driver_usb_serial_jtag esp_eth esp_event esp_gdbstub esp_hid esp_http_client esp_http_server esp_https_ota esp_https_server esp_hw_support esp_lcd esp_local_ctrl esp_mm esp_netif esp_netif_stack esp_partition esp_phy esp_pm esp_psram esp_ringbuf esp_rom esp_system esp_timer esp_vfs_console esp_wifi espcoredump espressif__bdc_motor espressif__pid_ctrl esptool_py fatfs freertos hal heap http_parser idf_test ieee802154 json log lwip main mbedtls mqtt newlib nvs_flash nvs_sec_provider openthread partition_table perfmon protobuf-c protocomm pthread sdmmc soc spi_flash spiffs tcp_transport ulp unity usb vfs wear_levelling wifi_provisioning wpa_supplicant xtensa
+-- Component paths: /home/zdrrrm/ESP32/esp-idf/components/app_trace /home/zdrrrm/ESP32/esp-idf/components/app_update /home/zdrrrm/ESP32/esp-idf/components/bootloader /home/zdrrrm/ESP32/esp-idf/components/bootloader_support /home/zdrrrm/ESP32/esp-idf/components/bt /home/zdrrrm/ESP32/esp-idf/components/cmock /home/zdrrrm/ESP32/esp-idf/components/console /home/zdrrrm/ESP32/esp-idf/components/cxx /home/zdrrrm/ESP32/esp-idf/components/driver /home/zdrrrm/ESP32/esp-idf/components/efuse /home/zdrrrm/ESP32/esp-idf/components/esp-tls /home/zdrrrm/ESP32/esp-idf/components/esp_adc /home/zdrrrm/ESP32/esp-idf/components/esp_app_format /home/zdrrrm/ESP32/esp-idf/components/esp_bootloader_format /home/zdrrrm/ESP32/esp-idf/components/esp_coex /home/zdrrrm/ESP32/esp-idf/components/esp_common /home/zdrrrm/ESP32/esp-idf/components/esp_driver_ana_cmpr /home/zdrrrm/ESP32/esp-idf/components/esp_driver_cam /home/zdrrrm/ESP32/esp-idf/components/esp_driver_dac /home/zdrrrm/ESP32/esp-idf/components/esp_driver_gpio /home/zdrrrm/ESP32/esp-idf/components/esp_driver_gptimer /home/zdrrrm/ESP32/esp-idf/components/esp_driver_i2c /home/zdrrrm/ESP32/esp-idf/components/esp_driver_i2s /home/zdrrrm/ESP32/esp-idf/components/esp_driver_isp /home/zdrrrm/ESP32/esp-idf/components/esp_driver_jpeg /home/zdrrrm/ESP32/esp-idf/components/esp_driver_ledc /home/zdrrrm/ESP32/esp-idf/components/esp_driver_mcpwm /home/zdrrrm/ESP32/esp-idf/components/esp_driver_parlio /home/zdrrrm/ESP32/esp-idf/components/esp_driver_pcnt /home/zdrrrm/ESP32/esp-idf/components/esp_driver_ppa /home/zdrrrm/ESP32/esp-idf/components/esp_driver_rmt /home/zdrrrm/ESP32/esp-idf/components/esp_driver_sdio /home/zdrrrm/ESP32/esp-idf/components/esp_driver_sdm /home/zdrrrm/ESP32/esp-idf/components/esp_driver_sdmmc /home/zdrrrm/ESP32/esp-idf/components/esp_driver_sdspi /home/zdrrrm/ESP32/esp-idf/components/esp_driver_spi /home/zdrrrm/ESP32/esp-idf/components/esp_driver_touch_sens /home/zdrrrm/ESP32/esp-idf/components/esp_driver_tsens /home/zdrrrm/ESP32/esp-idf/components/esp_driver_uart /home/zdrrrm/ESP32/esp-idf/components/esp_driver_usb_serial_jtag /home/zdrrrm/ESP32/esp-idf/components/esp_eth /home/zdrrrm/ESP32/esp-idf/components/esp_event /home/zdrrrm/ESP32/esp-idf/components/esp_gdbstub /home/zdrrrm/ESP32/esp-idf/components/esp_hid /home/zdrrrm/ESP32/esp-idf/components/esp_http_client /home/zdrrrm/ESP32/esp-idf/components/esp_http_server /home/zdrrrm/ESP32/esp-idf/components/esp_https_ota /home/zdrrrm/ESP32/esp-idf/components/esp_https_server /home/zdrrrm/ESP32/esp-idf/components/esp_hw_support /home/zdrrrm/ESP32/esp-idf/components/esp_lcd /home/zdrrrm/ESP32/esp-idf/components/esp_local_ctrl /home/zdrrrm/ESP32/esp-idf/components/esp_mm /home/zdrrrm/ESP32/esp-idf/components/esp_netif /home/zdrrrm/ESP32/esp-idf/components/esp_netif_stack /home/zdrrrm/ESP32/esp-idf/components/esp_partition /home/zdrrrm/ESP32/esp-idf/components/esp_phy /home/zdrrrm/ESP32/esp-idf/components/esp_pm /home/zdrrrm/ESP32/esp-idf/components/esp_psram /home/zdrrrm/ESP32/esp-idf/components/esp_ringbuf /home/zdrrrm/ESP32/esp-idf/components/esp_rom /home/zdrrrm/ESP32/esp-idf/components/esp_system /home/zdrrrm/ESP32/esp-idf/components/esp_timer /home/zdrrrm/ESP32/esp-idf/components/esp_vfs_console /home/zdrrrm/ESP32/esp-idf/components/esp_wifi /home/zdrrrm/ESP32/esp-idf/components/espcoredump /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/managed_components/espressif__bdc_motor /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/managed_components/espressif__pid_ctrl /home/zdrrrm/ESP32/esp-idf/components/esptool_py /home/zdrrrm/ESP32/esp-idf/components/fatfs /home/zdrrrm/ESP32/esp-idf/components/freertos /home/zdrrrm/ESP32/esp-idf/components/hal /home/zdrrrm/ESP32/esp-idf/components/heap /home/zdrrrm/ESP32/esp-idf/components/http_parser /home/zdrrrm/ESP32/esp-idf/components/idf_test /home/zdrrrm/ESP32/esp-idf/components/ieee802154 /home/zdrrrm/ESP32/esp-idf/components/json /home/zdrrrm/ESP32/esp-idf/components/log /home/zdrrrm/ESP32/esp-idf/components/lwip /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/main /home/zdrrrm/ESP32/esp-idf/components/mbedtls /home/zdrrrm/ESP32/esp-idf/components/mqtt /home/zdrrrm/ESP32/esp-idf/components/newlib /home/zdrrrm/ESP32/esp-idf/components/nvs_flash /home/zdrrrm/ESP32/esp-idf/components/nvs_sec_provider /home/zdrrrm/ESP32/esp-idf/components/openthread /home/zdrrrm/ESP32/esp-idf/components/partition_table /home/zdrrrm/ESP32/esp-idf/components/perfmon /home/zdrrrm/ESP32/esp-idf/components/protobuf-c /home/zdrrrm/ESP32/esp-idf/components/protocomm /home/zdrrrm/ESP32/esp-idf/components/pthread /home/zdrrrm/ESP32/esp-idf/components/sdmmc /home/zdrrrm/ESP32/esp-idf/components/soc /home/zdrrrm/ESP32/esp-idf/components/spi_flash /home/zdrrrm/ESP32/esp-idf/components/spiffs /home/zdrrrm/ESP32/esp-idf/components/tcp_transport /home/zdrrrm/ESP32/esp-idf/components/ulp /home/zdrrrm/ESP32/esp-idf/components/unity /home/zdrrrm/ESP32/esp-idf/components/usb /home/zdrrrm/ESP32/esp-idf/components/vfs /home/zdrrrm/ESP32/esp-idf/components/wear_levelling /home/zdrrrm/ESP32/esp-idf/components/wifi_provisioning /home/zdrrrm/ESP32/esp-idf/components/wpa_supplicant /home/zdrrrm/ESP32/esp-idf/components/xtensa
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build
+[1/975] Generating /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/esp-idf/esp_system/ld/memory.ld linker script...
+[2/975] Generating /home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/esp-idf/esp_system/ld/sections.ld.in linker script...
+[3/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/bignum_mod_raw.c.obj
+[4/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/aesce.c.obj
+[5/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/aesni.c.obj
+[6/975] Building C object esp-idf/mbedtls/mbedtls/3rdparty/everest/CMakeFiles/everest.dir/library/x25519.c.obj
+[7/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/bignum_mod.c.obj
+[8/975] Building C object esp-idf/mbedtls/mbedtls/3rdparty/everest/CMakeFiles/everest.dir/library/Hacl_Curve25519_joined.c.obj
+[9/975] Building C object esp-idf/mbedtls/mbedtls/3rdparty/everest/CMakeFiles/everest.dir/library/everest.c.obj
+[10/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/platform_util.c.obj
+[11/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/sha1.c.obj
+[12/975] Building C object esp-idf/mbedtls/mbedtls/3rdparty/p256-m/CMakeFiles/p256m.dir/p256-m/p256-m.c.obj
+[13/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/block_cipher.c.obj
+[14/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/chacha20.c.obj
+[15/975] Building C object esp-idf/mbedtls/mbedtls/3rdparty/p256-m/CMakeFiles/p256m.dir/p256-m_driver_entrypoints.c.obj
+[16/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/camellia.c.obj
+[17/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/chachapoly.c.obj
+[18/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/asn1parse.c.obj
+[19/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/dhm.c.obj
+[20/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/des.c.obj
+[21/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_util.c.obj
+[22/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/aes.c.obj
+[23/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/base64.c.obj
+[24/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/asn1write.c.obj
+[25/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecjpake.c.obj
+[26/975] Generating ../../partition_table/partition-table.bin
+Partition table binary generated. Contents:
+*******************************************************************************
+# ESP-IDF Partition Table
+# Name, Type, SubType, Offset, Size, Flags
+nvs,data,nvs,0x9000,24K,
+phy_init,data,phy,0xf000,4K,
+factory,app,factory,0x10000,1M,
+*******************************************************************************
+[27/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/constant_time.c.obj
+[28/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecp_curves_new.c.obj
+[29/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/cipher_wrap.c.obj
+[30/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/hkdf.c.obj
+[31/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecdh.c.obj
+[32/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/entropy_poll.c.obj
+[33/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ccm.c.obj
+[34/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/aria.c.obj
+[35/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/memory_buffer_alloc.c.obj
+[36/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/nist_kw.c.obj
+[37/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/padlock.c.obj
+[38/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecdsa.c.obj
+[39/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/md5.c.obj
+[40/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/entropy.c.obj
+[41/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/bignum_core.c.obj
+[42/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ctr_drbg.c.obj
+[43/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/cmac.c.obj
+[44/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/hmac_drbg.c.obj
+[45/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/lms.c.obj
+[46/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/md.c.obj
+[47/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/cipher.c.obj
+[48/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pk_ecc.c.obj
+[49/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/error.c.obj
+[50/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/lmots.c.obj
+[51/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pk_wrap.c.obj
+[52/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/platform.c.obj
+[53/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/poly1305.c.obj
+[54/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/bignum.c.obj
+[55/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pkcs12.c.obj
+[56/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pem.c.obj
+[57/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/gcm.c.obj
+[58/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pkwrite.c.obj
+[59/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_driver_wrappers_no_static.c.obj
+[60/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/oid.c.obj
+[61/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pkcs5.c.obj
+[62/975] Building C object esp-idf/bootloader_support/CMakeFiles/__idf_bootloader_support.dir/src/flash_encrypt.c.obj
+[63/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_aead.c.obj
+[64/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_client.c.obj
+[65/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_ffdh.c.obj
+[66/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ripemd160.c.obj
+[67/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_pake.c.obj
+[68/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pk.c.obj
+[69/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/sha3.c.obj
+[70/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_ecp.c.obj
+[71/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/pkparse.c.obj
+[72/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_se.c.obj
+[73/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/threading.c.obj
+[74/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_hash.c.obj
+[75/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_cipher.c.obj
+[76/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/version.c.obj
+[77/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_its_file.c.obj
+[78/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/version_features.c.obj
+[79/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecp_curves.c.obj
+[80/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/sha256.c.obj
+[81/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/timing.c.obj
+[82/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/rsa_alt_helpers.c.obj
+[83/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/sha512.c.obj
+[84/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/esp_hardware.c.obj
+[85/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/esp_mem.c.obj
+[86/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_mac.c.obj
+[87/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_rsa.c.obj
+[88/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_storage.c.obj
+[89/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/esp_timing.c.obj
+[90/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/aes/esp_aes_common.c.obj
+[91/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/aes/esp_aes_xts.c.obj
+[92/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto_slot_management.c.obj
+[93/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/bignum/bignum_alt.c.obj
+[94/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/sha/parallel_engine/sha.c.obj
+[95/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/sha/esp_sha.c.obj
+[96/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/mps_reader.c.obj
+[97/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/debug.c.obj
+[98/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509write.c.obj
+[99/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/ecp.c.obj
+[100/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/mps_trace.c.obj
+[101/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/md/esp_md.c.obj
+[102/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/aes/block/esp_aes.c.obj
+[103/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/bignum/esp_bignum.c.obj
+[104/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/sha/parallel_engine/esp_sha256.c.obj
+[105/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_debug_helpers_generated.c.obj
+[106/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/sha/parallel_engine/esp_sha1.c.obj
+[107/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/aes/esp_aes_gcm.c.obj
+[108/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crl.c.obj
+[109/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_create.c.obj
+[110/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj
+FAILED: esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj 
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc -DESP_PLATFORM -DIDF_VER=\"v5.3.2\" -DMBEDTLS_CONFIG_FILE=\"mbedtls/esp_config.h\" -DSOC_MMU_PAGE_SIZE=CONFIG_MMU_PAGE_SIZE -DSOC_XTAL_FREQ_MHZ=CONFIG_XTAL_FREQ -D_GLIBCXX_HAVE_POSIX_SEMAPHORE -D_GLIBCXX_USE_POSIX_SEMAPHORE -D_GNU_SOURCE -D_POSIX_READER_WRITER_LOCKS -I/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/config -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/esp_crt_bundle/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library -I/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test/build/esp-idf/mbedtls/mbedtls/library -I/home/zdrrrm/ESP32/esp-idf/components/newlib/platform_include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/config/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/config/include/freertos -I/home/zdrrrm/ESP32/esp-idf/components/freertos/config/xtensa/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/FreeRTOS-Kernel/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include -I/home/zdrrrm/ESP32/esp-idf/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos -I/home/zdrrrm/ESP32/esp-idf/components/freertos/esp_additions/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/include/soc -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/include/soc/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/dma/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/ldo/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/port/esp32/. -I/home/zdrrrm/ESP32/esp-idf/components/esp_hw_support/port/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/heap/include -I/home/zdrrrm/ESP32/esp-idf/components/log/include -I/home/zdrrrm/ESP32/esp-idf/components/soc/include -I/home/zdrrrm/ESP32/esp-idf/components/soc/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/soc/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/hal/platform_port/include -I/home/zdrrrm/ESP32/esp-idf/components/hal/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/hal/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_rom/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_rom/include/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/esp_rom/esp32 -I/home/zdrrrm/ESP32/esp-idf/components/esp_common/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_system/include -I/home/zdrrrm/ESP32/esp-idf/components/esp_system/port/soc -I/home/zdrrrm/ESP32/esp-idf/components/esp_system/port/include/private -I/home/zdrrrm/ESP32/esp-idf/components/xtensa/esp32/include -I/home/zdrrrm/ESP32/esp-idf/components/xtensa/include -I/home/zdrrrm/ESP32/esp-idf/components/xtensa/deprecated_include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/include/apps -I/home/zdrrrm/ESP32/esp-idf/components/lwip/include/apps/sntp -I/home/zdrrrm/ESP32/esp-idf/components/lwip/lwip/src/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/freertos/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/esp32xx/include -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/esp32xx/include/arch -I/home/zdrrrm/ESP32/esp-idf/components/lwip/port/esp32xx/include/sys -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/3rdparty/everest/include -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/3rdparty/p256-m -I/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/3rdparty/p256-m/p256-m -mlongcalls -Wno-frame-address  -fno-builtin-memcpy -fno-builtin-memset -fno-builtin-bzero -fno-builtin-stpcpy -fno-builtin-strncpy -Wall -Wextra -Wwrite-strings -Wmissing-prototypes -Wformat=2 -Wno-format-nonliteral -Wvla -Wlogical-op -Wshadow -Wformat-signedness -Wformat-overflow=2 -Wformat-truncation -Werror -Wmissing-declarations -ffunction-sections -fdata-sections -Wall -Werror=all -Wno-error=unused-function -Wno-error=unused-variable -Wno-error=unused-but-set-variable -Wno-error=deprecated-declarations -Wextra -Wno-unused-parameter -Wno-sign-compare -Wno-enum-conversion -gdwarf-4 -ggdb -Og -fno-shrink-wrap -fmacro-prefix-map=/home/zdrrrm/Projects/AIROBOT/Software/speed_control_test=. -fmacro-prefix-map=/home/zdrrrm/ESP32/esp-idf=/IDF -fstrict-volatile-bitfields -fno-jump-tables -fno-tree-switch-conversion -std=gnu17 -Wno-old-style-declaration -MD -MT esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj -MF esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj.d -o esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_crt.c.obj -c /home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c
+In file included from /home/zdrrrm/ESP32/esp-idf/components/newlib/platform_include/sys/dirent.h:68,
+                 from /home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:39,
+                 from /home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:68:
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/sys/dirent.h:10:2: error: #error "<dirent.h> not supported"
+ #error "<dirent.h> not supported"
+  ^~~~~
+In file included from /home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:68:
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:48:12: error: unknown type name 'DIR'
+ int  dirfd(DIR *);
+            ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:51:17: error: unknown type name 'DIR'
+ int  fdclosedir(DIR *);
+                 ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:53:1: error: unknown type name 'DIR'
+ DIR *opendir(const char *);
+ ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:54:1: error: unknown type name 'DIR'
+ DIR *fdopendir(int);
+ ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:56:11: error: unknown type name 'DIR'
+   readdir(DIR *);
+           ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:58:16: error: unknown type name 'DIR'
+ int  readdir_r(DIR *__restrict, struct dirent *__restrict,
+                ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:61:17: error: unknown type name 'DIR'
+ void  rewinddir(DIR *);
+                 ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:72:15: error: unknown type name 'DIR'
+ void  seekdir(DIR *, long);
+               ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:73:15: error: unknown type name 'DIR'
+ long  telldir(DIR *);
+               ^~~
+/home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/xtensa-esp32-elf/sys-include/dirent.h:76:15: error: unknown type name 'DIR'
+ int  closedir(DIR *);
+               ^~~
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c: In function 'mbedtls_x509_crt_parse_path':
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1599:5: error: unknown type name 'DIR'
+     DIR *dir = opendir(path);
+     ^~~
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1614:21: error: implicit declaration of function 'readdir'; did you mean 'scandir'? [-Werror=implicit-function-declaration]
+     while ((entry = readdir(dir)) != NULL) {
+                     ^~~~~~~
+                     scandir
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1614:19: error: assignment to 'struct dirent *' from 'int' makes pointer from integer without a cast [-Werror=int-conversion]
+     while ((entry = readdir(dir)) != NULL) {
+                   ^
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1616:56: error: dereferencing pointer to incomplete type 'struct dirent'
+                                    "%s/%s", path, entry->d_name);
+                                                        ^~
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c:1652:5: error: implicit declaration of function 'closedir'; did you mean 'fdopendir'? [-Werror=implicit-function-declaration]
+     closedir(dir);
+     ^~~~~~~~
+     fdopendir
+/home/zdrrrm/ESP32/esp-idf/components/mbedtls/mbedtls/library/x509_crt.c: At top level:
+cc1: error: unrecognized command line option '-Wno-enum-conversion' [-Werror]
+cc1: all warnings being treated as errors
+[111/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509_csr.c.obj
+[112/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/pkcs7.c.obj
+[113/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls13_generic.c.obj
+[114/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls13_keys.c.obj
+[115/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls13_server.c.obj
+[116/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509write_crt.c.obj
+[117/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509write_csr.c.obj
+[118/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_ciphersuites.c.obj
+[119/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/home/zdrrrm/ESP32/esp-idf/components/mbedtls/port/sha/parallel_engine/esp_sha512.c.obj
+[120/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_cache.c.obj
+[121/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls13_client.c.obj
+[122/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_cookie.c.obj
+[123/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_client.c.obj
+[124/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_ticket.c.obj
+[125/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/rsa.c.obj
+[126/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedx509.dir/x509.c.obj
+[127/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls12_client.c.obj
+[128/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_msg.c.obj
+[129/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls12_server.c.obj
+[130/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedtls.dir/ssl_tls.c.obj
+[131/975] Building C object esp-idf/mbedtls/mbedtls/library/CMakeFiles/mbedcrypto.dir/psa_crypto.c.obj
+ninja: build stopped: subcommand failed.

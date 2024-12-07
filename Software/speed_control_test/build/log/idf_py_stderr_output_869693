@@ -1,0 +1,15 @@
+CMake Warning at /home/zdrrrm/ESP32/esp-idf/tools/cmake/tool_version_check.cmake:41 (message):
+  Can not get version for tool:
+  /home/zdrrrm/tools/xtensa-esp32-elf/esp-2021r1-8.4.0/xtensa-esp32-elf/bin/xtensa-esp32-elf-gcc
+
+
+  Check Getting Started documentation or proceed at own risk.
+
+Call Stack (most recent call first):
+  /home/zdrrrm/ESP32/esp-idf/components/esp_common/project_include.cmake:10 (check_expected_tool_version)
+  /home/zdrrrm/ESP32/esp-idf/tools/cmake/build.cmake:400 (include)
+  /home/zdrrrm/ESP32/esp-idf/tools/cmake/build.cmake:632 (__build_process_project_includes)
+  /home/zdrrrm/ESP32/esp-idf/tools/cmake/project.cmake:710 (idf_build_process)
+  CMakeLists.txt:6 (project)
+
+
