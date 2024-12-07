@@ -1,3 +1,9 @@
 [submodule "ESP_MESH/esp-mdf"]
 	path = ESP_MESH/esp-mdf
 	url = https://github.com/espressif/esp-mdf/
+[submodule "Software/diff_drive_robot/components/micro_ros_espidf_component"]
+	path = Software/diff_drive_robot/components/micro_ros_espidf_component
+	url = https://github.com/micro-ROS/micro_ros_espidf_component
+[submodule "Software/mcpwm_bdc_speed_control/main/mcpwm_bdc_speed_control/components/micro_ros_espidf_component"]
+	path = Software/mcpwm_bdc_speed_control/main/mcpwm_bdc_speed_control/components/micro_ros_espidf_component
+	url = https://github.com/micro-ROS/micro_ros_espidf_component
