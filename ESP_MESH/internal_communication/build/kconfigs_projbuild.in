@@ -1,5 +1,0 @@
-source "/home/zdrrrm/ESP32/esp-idf/components/app_update/Kconfig.projbuild"
-source "/home/zdrrrm/ESP32/esp-idf/components/bootloader/Kconfig.projbuild"
-source "/home/zdrrrm/ESP32/esp-idf/components/esptool_py/Kconfig.projbuild"
-source "/home/zdrrrm/ESP32/esp-idf/components/partition_table/Kconfig.projbuild"
-source "/home/zdrrrm/Projects/AIROBOT/ESP_MESH/internal_communication/main/Kconfig.projbuild"
