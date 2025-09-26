@@ -1,6 +1,6 @@
 {
     "idf.adapterTargetName": "esp32",
-    "idf.espIdfPath": "/Users/zdrrrm/esp/v5.5.1/esp-idf",
+    "idf.espIdfPath": "/Users/zdrrrm/esp/v5.2.5/esp-idf",
     "idf.toolsPath": "/Users/zdrrrm/.espressif",
     "idf.port": "/dev/tty.usbserial-0001",
     "files.associations": {
@@ -10,5 +10,5 @@
         "motor_control.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.pythonInstallPath": "/opt/anaconda3/bin/python3"
+    "idf.pythonInstallPath": "/opt/homebrew/Caskroom/miniforge/base/bin/python"
 }
