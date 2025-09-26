@@ -1,29 +1,20 @@
 #pragma once
 
-// PINS
-#define LED_BUILTIN 33
-#define PIN_LEFT_FORWARD 26
-#define PIN_LEFT_BACKWARD 27
-#define PIN_RIGHT_FORWARD 18
-#define PIN_RIGHT_BACKWARD 19
-
-// PWM Channels (Reserve channel 0 and 1 for camera)
-#define PWM_LEFT_FORWARD LEDC_CHANNEL_2
-#define PWM_LEFT_BACKWARD LEDC_CHANNEL_3
-#define PWM_RIGHT_FORWARD LEDC_CHANNEL_4
-#define PWM_RIGHT_BACKWARD LEDC_CHANNEL_5
-
-// Other PWM settings
-#define PWM_FREQUENCY 50
-#define PWM_RESOLUTION LEDC_TIMER_12_BIT
-#define PWM_TIMER LEDC_TIMER_1
-#define PWM_MODE LEDC_HIGH_SPEED_MODE
+// Robot geometry
+#define WHEEL_RADIUS      0.05f   // meters
+#define WHEEL_BASE        0.10f   // distance between wheels (m)
+#define TICKS_PER_REV     360.0f  // encoder CPR (counts per wheel revolution)
 
 // These values are determined by experiment and are unique to every robot
 #define PWM_MOTOR_MIN 750    // The value where the motor starts moving
 #define PWM_MOTOR_MAX 4095   // Full speed (2^12 - 1)
 
-void setupPins();
+// PID coefficients
+#define KP 1.0
+#define KI 1.0
+#define KD 1.0
+
+void setupMotor();
 
 typedef struct geometry_msgs__msg__Twist geometry_msgs__msg__Twist;
 void setMotorFromTwist(geometry_msgs__msg__Twist* msg);

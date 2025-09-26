@@ -20,7 +20,7 @@ void app_main(void){
         ESP_ERROR_CHECK(uros_network_interface_initialize());
     #endif 
 
-    setupPins();
+    setupMotor();
     // ota_init();
 
     // Run ROS in FreeRTOS stack

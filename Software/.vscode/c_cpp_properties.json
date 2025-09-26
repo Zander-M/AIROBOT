@@ -4,8 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/components/**",
-                "${workspaceFolder}/build/esp-idf/microros_prebuilt/**",
+                "${workspaceFolder}/build/esp-idf",
                 "/Users/zdrrrm/esp/v5.2.5/esp-idf/components/**"
             ],
             "defines": [],
