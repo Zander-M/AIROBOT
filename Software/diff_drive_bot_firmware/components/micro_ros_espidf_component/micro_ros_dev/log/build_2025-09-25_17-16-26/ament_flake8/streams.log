@@ -1,0 +1,43 @@
+[0.270s] Invoking command in '/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/src/ament_lint/ament_flake8': AMENT_PREFIX_PATH=/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_lint CONDA_PROMPT_MODIFIER=(base) PYTHONPATH=/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/prefix_override:/Users/zdrrrm/.espressif/python_env/idf5.5_py3.10_env/lib/python3.10/site-packages/colcon_core/task/python/colcon_distutils_commands:/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages:/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_lint/lib/python3.10/site-packages SHLVL=3 _=/usr/bin/env /Users/zdrrrm/.espressif/python_env/idf5.5_py3.10_env/bin/python -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../../build/ament_flake8 build --build-base /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build install --record /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/install.log --single-version-externally-managed install_data
+[0.392s] running egg_info
+[0.393s] creating ../../../build/ament_flake8/ament_flake8.egg-info
+[0.394s] writing ../../../build/ament_flake8/ament_flake8.egg-info/PKG-INFO
+[0.395s] writing dependency_links to ../../../build/ament_flake8/ament_flake8.egg-info/dependency_links.txt
+[0.395s] writing entry points to ../../../build/ament_flake8/ament_flake8.egg-info/entry_points.txt
+[0.395s] writing requirements to ../../../build/ament_flake8/ament_flake8.egg-info/requires.txt
+[0.395s] writing top-level names to ../../../build/ament_flake8/ament_flake8.egg-info/top_level.txt
+[0.395s] writing manifest file '../../../build/ament_flake8/ament_flake8.egg-info/SOURCES.txt'
+[0.400s] reading manifest file '../../../build/ament_flake8/ament_flake8.egg-info/SOURCES.txt'
+[0.401s] writing manifest file '../../../build/ament_flake8/ament_flake8.egg-info/SOURCES.txt'
+[0.401s] running build
+[0.401s] running build_py
+[0.401s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build
+[0.401s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib
+[0.401s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8
+[0.401s] copying ament_flake8/__init__.py -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8
+[0.401s] copying ament_flake8/pytest_marker.py -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8
+[0.401s] copying ament_flake8/main.py -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8
+[0.402s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8/configuration
+[0.402s] copying ament_flake8/configuration/ament_flake8.ini -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8/configuration
+[0.402s] running install
+[0.404s] running install_lib
+[0.406s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8
+[0.406s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8/configuration
+[0.406s] copying /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8/configuration/ament_flake8.ini -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8/configuration
+[0.406s] copying /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8/__init__.py -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8
+[0.406s] copying /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8/pytest_marker.py -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8
+[0.407s] copying /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/build/lib/ament_flake8/main.py -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8
+[0.407s] byte-compiling /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8/__init__.py to __init__.cpython-310.pyc
+[0.407s] byte-compiling /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8/pytest_marker.py to pytest_marker.cpython-310.pyc
+[0.407s] byte-compiling /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8/main.py to main.cpython-310.pyc
+[0.409s] running install_data
+[0.409s] copying package.xml -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/share/ament_flake8
+[0.409s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/share/ament_index
+[0.409s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/share/ament_index/resource_index
+[0.409s] creating /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/share/ament_index/resource_index/packages
+[0.409s] copying resource/ament_flake8 -> /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/share/ament_index/resource_index/packages
+[0.409s] running install_egg_info
+[0.412s] Copying ../../../build/ament_flake8/ament_flake8.egg-info to /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/lib/python3.10/site-packages/ament_flake8-0.19.2-py3.10.egg-info
+[0.413s] running install_scripts
+[0.433s] Installing ament_flake8 script to /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/install/ament_flake8/bin
+[0.433s] writing list of installed files to '/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_flake8/install.log'

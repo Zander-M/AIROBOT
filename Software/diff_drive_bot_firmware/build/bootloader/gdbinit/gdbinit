@@ -1,0 +1,2 @@
+source /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/diff_drive_bot_firmware/build/bootloader/gdbinit/symbols
+source /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/diff_drive_bot_firmware/build/bootloader/gdbinit/connect

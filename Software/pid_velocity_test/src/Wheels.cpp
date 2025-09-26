@@ -43,7 +43,6 @@ void wheel_run() {
   // time difference
   long currT = micros();
   float deltaT = ((float) (currT - prevT))/( 1.0e6 );
-  float velocity = (l_pos - l_pos_prev)
   prevT = currT;
 
   // Read the position in an atomic block to avoid a potential

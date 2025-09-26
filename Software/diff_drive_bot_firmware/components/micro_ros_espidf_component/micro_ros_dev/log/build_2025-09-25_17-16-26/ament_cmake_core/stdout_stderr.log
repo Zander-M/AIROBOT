@@ -1,0 +1,17 @@
+-- Found Python3: /opt/anaconda3/bin/python3 (found version "3.10.14") found components: Interpreter
+Traceback (most recent call last):
+  File "/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/src/ament_cmake/ament_cmake_core/cmake/core/package_xml_2_cmake.py", line 22, in <module>
+    from catkin_pkg.package import parse_package_string
+ModuleNotFoundError: No module named 'catkin_pkg'
+CMake Error at cmake/core/ament_package_xml.cmake:95 (message):
+  execute_process(/opt/anaconda3/bin/python3
+  /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/src/ament_cmake/ament_cmake_core/cmake/core/package_xml_2_cmake.py
+  /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/src/ament_cmake/ament_cmake_core/package.xml
+  /Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/ament_cmake_core/ament_cmake_core/package.cmake)
+  returned error code 1
+Call Stack (most recent call first):
+  cmake/core/ament_package_xml.cmake:49 (_ament_package_xml)
+  CMakeLists.txt:15 (ament_package_xml)
+
+
+-- Configuring incomplete, errors occurred!

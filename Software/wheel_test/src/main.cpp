@@ -11,8 +11,8 @@
 #include <WebServer.h>
 #include <ElegantOTA.h>
 
-const char* ssid = "test_wifi";
-const char* password = "test_password";
+const char* ssid = "airob_test";
+const char* password = "airob_test";
 CRGB leds[NUM_LEDS];
 
 WebServer server(80);

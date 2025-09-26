@@ -1,0 +1,10 @@
+# Hashes of file build rules.
+eec78f1d586b49af1fa21a9a2d502974 CMakeFiles/ucdr
+3c6365370dcb3e72c4d5a86f3ee71805 CMakeFiles/ucdr-complete
+62a5de31394808710affc45766389ade ucdr-prefix/src/ucdr-stamp/ucdr-build
+49e91fa6dbf9708a85f35d410209253e ucdr-prefix/src/ucdr-stamp/ucdr-configure
+a896699ce4ae7ebf3e5f97590d4b5edf ucdr-prefix/src/ucdr-stamp/ucdr-download
+a2674f9fc2e98cdd5bd8805e1c459a05 ucdr-prefix/src/ucdr-stamp/ucdr-install
+cd105371bb48fffa02a60576256ac8b4 ucdr-prefix/src/ucdr-stamp/ucdr-mkdir
+aba7987e763724c719dabd350955d451 ucdr-prefix/src/ucdr-stamp/ucdr-patch
+f6f78a88842334a014a6bcfbff6de2d3 ucdr-prefix/src/ucdr-stamp/ucdr-update
