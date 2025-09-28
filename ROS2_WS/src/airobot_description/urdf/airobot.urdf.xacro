@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot name="diffbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:arg name="prefix" default=""/>
+
+<xacro:macro name="diffbot" params="prefix">
+  <!-- Macro definition -->
+    <!-- Root frame -->
+    <link name="${prefix}odom"/>
+
+    <!-- Base link -->
+    <link name="${prefix}base_link">
+      <visual>
+        <geometry>
+          <box size="0.2 0.2 0.1"/>
+        </geometry>
+        <material name="blue">
+          <color rgba="0 0 1 1"/>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Fixed joint -->
+    <joint name="${prefix}odom_to_base" type="fixed">
+      <parent link="${prefix}odom"/>
+      <child link="${prefix}base_link"/>
+    </joint>
+</xacro:macro>
+<xacro:diffbot prefix="$(arg prefix)"/>
+</robot>
