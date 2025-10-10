@@ -1,5 +1,0 @@
-/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/gmock_vendor/CMakeFiles/edit_cache.dir
-/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/gmock_vendor/CMakeFiles/rebuild_cache.dir
-/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/gmock_vendor/CMakeFiles/list_install_components.dir
-/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/gmock_vendor/CMakeFiles/install.dir
-/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/gmock_vendor/CMakeFiles/install/local.dir

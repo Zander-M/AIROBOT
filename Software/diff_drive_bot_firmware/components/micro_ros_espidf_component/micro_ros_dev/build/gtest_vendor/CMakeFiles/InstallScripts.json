@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/zdrrrm/Desktop/Projects/AIROBOT/Software/firmware/components/micro_ros_espidf_component/micro_ros_dev/build/gtest_vendor/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

@@ -1,2 +1,7 @@
 .vscode/
 build/
+
+# ESP-IDF config
+
+sdkconig
+sdkconig.*
