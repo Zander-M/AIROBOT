@@ -77,7 +77,9 @@ void ros_task(void *arg) {
 //Callbacks
 
 void cmd_vel_callback(const void * msgin){
-
+    const geometry_msgs__msg__Twist *msg = (const geometry_msgs__msg__Twist *)msgin;
+    printf("Received /cmd_vel: linear=%.2f angular=%.2f\n",
+           msg->linear.x, msg->angular.z);
 }
 
 void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {

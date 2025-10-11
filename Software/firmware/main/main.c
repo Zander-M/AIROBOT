@@ -21,7 +21,9 @@ void app_main(void){
     #endif 
 
     setupMotor();
+    xTaskCreate(motor_update_task, "motor_update", 4096, NULL, 5, NULL);
     // ota_init();
+
 
     // Run ROS in FreeRTOS stack
     xTaskCreate(ros_task, "ros_task", 8192, NULL, 5, NULL);

@@ -45,7 +45,7 @@ int max_power = 255;
 // ISR Handlers for encoder reading
 static void IRAM_ATTR readLeftEncoder(void* arg){
     int b = gpio_get_level(E1B);
-    if (b) l_pos++; else l_pos--;
+    if (b) l_pos--; else l_pos++;
 }
 
 static void IRAM_ATTR readRightEncoder(void* arg){
@@ -66,6 +66,15 @@ void wheel_init() {
         .pull_up_en = 1
     };
     gpio_config(&io_conf);
+
+    gpio_config_t io_confB = {
+        .intr_type = GPIO_INTR_DISABLE,
+        .mode = GPIO_MODE_INPUT,
+        .pin_bit_mask = (1ULL << E1B) | (1ULL << E2B),
+        .pull_down_en = 0,
+        .pull_up_en = 1
+    };
+    gpio_config(&io_confB);
 
     // Install ISR service
     gpio_install_isr_service(0);
@@ -200,14 +209,15 @@ void wheel_run() {
         ledc_update_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_2);
     }
 
-    ESP_LOGI(TAG, "L: tgt=%.2f, meas=%.2f | R: tgt=%.2f, meas=%.2f", 
-             l_target_speed, l_speed, r_target_speed, r_speed);
+    // ESP_LOGI(TAG, "L: tgt=%.2f, meas=%.2f | R: tgt=%.2f, meas=%.2f", 
+            //  l_target_speed, l_speed, r_target_speed, r_speed);
 }
 
 // setters
 void setLeftTarget(float target_ticks_per_s) {
     l_target_speed = target_ticks_per_s;
 }
+
 void setRightTarget(float target_ticks_per_s) {
     r_target_speed = target_ticks_per_s;
 }

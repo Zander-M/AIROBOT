@@ -8,6 +8,10 @@
 #include <driver/gpio.h>
 #include <driver/ledc.h>
 
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+
 #include "motor_control.h"
 #include "wheels.h"
 
@@ -19,7 +23,7 @@ static inline float radps_to_ticks(float radps) {
 
 void setupMotor(void){
     wheel_init();
-    PIDConfig cfg = {(float)KP, 
+    PIDConfig cfg = {(float) KP, 
                      (float) KI, 
                      (float) KD
                     };
@@ -43,4 +47,14 @@ void setMotorFromTwist(geometry_msgs__msg__Twist* msg) {
 
     printf("Twist: v=%.2f m/s, w=%.2f rad/s | Targets: L=%.2f tps, R=%.2f tps\n",
            v, w, l_tps, r_tps);
+}
+
+void motor_update_task(void *arg) {
+    const TickType_t period = pdMS_TO_TICKS(10); // 100 Hz
+    TickType_t last = xTaskGetTickCount();
+
+    while (1) {
+        wheel_run();  // PID + PWM update
+        vTaskDelayUntil(&last, period);
+    }
 }

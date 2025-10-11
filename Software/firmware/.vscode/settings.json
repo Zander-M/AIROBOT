@@ -5,5 +5,7 @@
     "files.associations": {
         "wheels.h": "c",
         "motor_control.h": "c"
-    }
+    },
+    "idf.port": "/dev/tty.usbserial-0001",
+    "idf.flashType": "UART"
 }
