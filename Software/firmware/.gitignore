@@ -3,5 +3,5 @@ build/
 
 # ESP-IDF config
 
-sdkconig
-sdkconig.*
+sdkconfig
+sdkconfig.*
