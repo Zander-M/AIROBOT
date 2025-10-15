@@ -15,6 +15,10 @@
 
 static const char* TAG="WHEELS";
 
+// Wheel Direction
+#define LEFT_DIR -1
+#define RIGHT_DIR 1
+
 // Encoder Positions 
 volatile int l_pos = 0; 
 volatile int r_pos = 0; 
@@ -215,9 +219,9 @@ void wheel_run() {
 
 // setters
 void setLeftTarget(float target_ticks_per_s) {
-    l_target_speed = target_ticks_per_s;
+    l_target_speed = LEFT_DIR * target_ticks_per_s;
 }
 
 void setRightTarget(float target_ticks_per_s) {
-    r_target_speed = target_ticks_per_s;
+    r_target_speed = RIGHT_DIR * target_ticks_per_s;
 }
