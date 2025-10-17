@@ -143,7 +143,7 @@ void wheel_init() {
 
     // Set time
     prevT = esp_timer_get_time();
-    ESP_LOGI(TAG, "Whees initialized");
+    ESP_LOGI(TAG, "Wheels initialized");
 }
 
 void wheel_run() {

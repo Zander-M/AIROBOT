@@ -14,12 +14,11 @@
 #define KI 0.8
 #define KD 0
 
-void setupMotor();
+void motor_init();
 
 typedef struct geometry_msgs__msg__Twist geometry_msgs__msg__Twist;
 void setMotorFromTwist(geometry_msgs__msg__Twist* msg);
-
-void motor_update_task(void *arg); //Callback 
+void motor_update_task(void *arg); // Callback 
 
 // Helper Macro function
 

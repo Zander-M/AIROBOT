@@ -21,7 +21,7 @@ static inline float radps_to_ticks(float radps) {
     return radps * (TICKS_PER_REV / TWO_PI);
 }
 
-void setupMotor(void){
+void motor_init(void){
     wheel_init();
     PIDConfig cfg = {(float) KP, 
                      (float) KI, 
@@ -45,8 +45,8 @@ void setMotorFromTwist(geometry_msgs__msg__Twist* msg) {
     setLeftTarget(l_tps);
     setRightTarget(r_tps);
 
-    printf("Twist: v=%.2f m/s, w=%.2f rad/s | Targets: L=%.2f tps, R=%.2f tps\n",
-           v, w, l_tps, r_tps);
+    // printf("Twist: v=%.2f m/s, w=%.2f rad/s | Targets: L=%.2f tps, R=%.2f tps\n",
+    //        v, w, l_tps, r_tps);
 }
 
 void motor_update_task(void *arg) {
