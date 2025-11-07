@@ -1,0 +1,9 @@
+.vscode/
+build/
+
+# ESP-IDF config
+
+sdkconfig
+sdkconfig.*
+
+managed_components/*
