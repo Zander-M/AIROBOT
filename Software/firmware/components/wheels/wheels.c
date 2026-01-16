@@ -10,14 +10,10 @@
 #include <esp_attr.h>
 #include <esp_timer.h>
 
-#include "pinout.h"
 #include "wheels.h"
+#include "robot_params.h"
 
 static const char* TAG="WHEELS";
-
-// Wheel Direction
-#define LEFT_DIR -1
-#define RIGHT_DIR 1
 
 // Encoder Positions 
 volatile int l_pos = 0; 
@@ -43,9 +39,6 @@ float r_eintegral = 0;
 // PID parameter
 static PIDConfig pid = {1.0f, 0.0f, 0.0f};
 
-int min_power = 50;
-int max_power = 255;
-
 // ISR Handlers for encoder reading
 static void IRAM_ATTR readLeftEncoder(void* arg){
     int b = gpio_get_level(E1B);
@@ -59,6 +52,14 @@ static void IRAM_ATTR readRightEncoder(void* arg){
 
 /// @brief pin setups
 void wheel_setPID(PIDConfig cfg) {pid = cfg;}
+
+// PWM value clipping
+static inline int pwm_clipping(float u_abs) {
+    int pwm = (int)lroundf(u_abs);
+    if (pwm <= PWM_MIN) return 0; // clipping min PWM value
+    if (pwm >  PWM_MAX) return PWM_MAX;
+    return pwm;
+}
 
 void wheel_init() {
     // GPIO setup
@@ -96,7 +97,7 @@ void wheel_init() {
         .speed_mode = LEDC_HIGH_SPEED_MODE,
         .duty_resolution = LEDC_TIMER_8_BIT,
         .timer_num = LEDC_TIMER_0,
-        .freq_hz = 1000,
+        .freq_hz = 10000,
         .clk_cfg = LEDC_AUTO_CLK
     };
     ledc_timer_config(&timer);
@@ -185,8 +186,8 @@ void wheel_run() {
     r_eprev = r_err;
 
     // map to PWM duty
-    int l_pwm = (int)fminf(fabsf(l_u), max_power);
-    int r_pwm = (int)fminf(fabsf(r_u), max_power);
+    int l_pwm = pwm_clipping(fabsf(l_u));
+    int r_pwm = pwm_clipping(fabsf(r_u));
 
     // apply
     if (l_u >= 0) {
@@ -213,8 +214,6 @@ void wheel_run() {
         ledc_update_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_2);
     }
 
-    // ESP_LOGI(TAG, "L: tgt=%.2f, meas=%.2f | R: tgt=%.2f, meas=%.2f", 
-            //  l_target_speed, l_speed, r_target_speed, r_speed);
 }
 
 // setters

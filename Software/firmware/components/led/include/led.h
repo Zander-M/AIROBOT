@@ -1,11 +1,8 @@
 #pragma once
+#include "robot_params.h"
 #include "driver/gpio.h"
 #include "esp_err.h"
 #include "stdint.h"
-#include "pinout.h"
-
-#define LED_PIN LEDS
-#define LED_COUNT 1
 
 #ifdef __cplusplus
 extern "C" {

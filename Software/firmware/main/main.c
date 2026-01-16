@@ -9,8 +9,6 @@
 #include "ota.h"
 #include "led.h"
 
-#define LED_PIN 4
-#define LED_COUNT 2
 
 #include <uros_network_interfaces.h>
 
@@ -32,7 +30,6 @@ void app_main(void){
     // LED
     led_init();
     led_clear();
-    led_rainbow(100);
 
     // Motor
     motor_init();

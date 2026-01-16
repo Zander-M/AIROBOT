@@ -6,7 +6,7 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/components/**",
                 "${workspaceFolder}/build/esp-idf/microros_prebuilt/**",
-                "/Users/zdrrrm/esp/v5.5.1/esp-idf/components/**"
+                "/home/zdrrrm/esp/v5.5.2/esp-idf/components/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

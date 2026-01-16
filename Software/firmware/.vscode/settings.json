@@ -1,11 +1,11 @@
 {
-    "idf.espIdfPath": "/Users/zdrrrm/esp/v5.5.1/esp-idf",
-    "idf.toolsPath": "/Users/zdrrrm/.espressif",
-    "idf.pythonInstallPath": "/Users/zdrrrm/miniforge3/bin/python",
+    "idf.espIdfPath": "/home/zdrrrm/esp/v5.5.2/esp-idf",
+    "idf.toolsPath": "/home/zdrrrm/.espressif",
+    "idf.pythonInstallPath": "/home/zdrrrm/anaconda3/envs/airobot/bin/python",
     "files.associations": {
         "wheels.h": "c",
         "motor_control.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.port": "/dev/tty.usbserial-0001"
+    "idf.port": "/dev/ttyUSB0"
 }

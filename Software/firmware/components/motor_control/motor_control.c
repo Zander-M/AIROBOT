@@ -5,17 +5,14 @@
 #include <math.h>
 
 #include <geometry_msgs/msg/twist.h>
-#include <driver/gpio.h>
-#include <driver/ledc.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-
 #include "motor_control.h"
 #include "wheels.h"
+#include "robot_params.h"
 
-#define TWO_PI 6.28318530718f
 
 static inline float radps_to_ticks(float radps) {
     return radps * (TICKS_PER_REV / TWO_PI);
