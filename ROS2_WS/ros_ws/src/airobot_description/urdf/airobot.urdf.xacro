@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<robot name="diffbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ========= Materials ========= -->
+  <material name="mat_black">
+    <color rgba="0.05 0.05 0.05 1.0"/>
+  </material>
+
+  <material name="mat_wheel">
+    <color rgba="0.15 0.15 0.15 1.0"/>
+  </material>
+
+  <!-- ========= Macro ========= -->
+  <xacro:macro name="diffbot" params="prefix">
+
+    <!-- Dimensions (meters) -->
+    <xacro:property name="base_length" value="0.095"/>  <!-- x -->
+    <xacro:property name="base_width"  value="0.085"/>  <!-- y -->
+    <xacro:property name="base_height" value="0.030"/>  <!-- z (pick what looks right) -->
+
+    <xacro:property name="wheel_radius" value="0.022"/> <!-- 44mm diameter -->
+    <xacro:property name="wheel_width"  value="0.010"/> <!-- 10mm thick wheel (adjust) -->
+
+    <!-- Place wheel centers slightly outside the chassis -->
+    <xacro:property name="wheel_y" value="${base_width/2.0 + wheel_width/2.0}"/>
+    <!-- Wheel touching ground when base_link z is wheel_radius -->
+    <xacro:property name="wheel_z" value="${wheel_radius}"/>
+
+    <!-- ========= Frames ========= -->
+    <link name="${prefix}odom"/>
+
+    <!-- Base (chassis) -->
+    <link name="${prefix}base_link">
+      <visual>
+        <origin xyz="0 0 ${wheel_radius + base_height/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${base_length} ${base_width} ${base_height}"/>
+        </geometry>
+        <material name="mat_black"/>
+      </visual>
+
+      <!-- Optional: collision so it’s usable in sim later -->
+      <collision>
+        <origin xyz="0 0 ${wheel_radius + base_height/2.0}" rpy="0 0 0"/>
+        <geometry>
+          <box size="${base_length} ${base_width} ${base_height}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}odom_to_base" type="fixed">
+      <parent link="${prefix}odom"/>
+      <child link="${prefix}base_link"/>
+    </joint>
+
+    <!-- ========= Left wheel ========= -->
+    <link name="${prefix}left_wheel">
+      <visual>
+        <!-- URDF cylinder axis is Z by default; rotate so axis becomes Y (axle) -->
+        <origin xyz="0 ${wheel_y} ${wheel_z}" rpy="1.57079632679 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="mat_wheel"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 ${wheel_y} ${wheel_z}" rpy="1.57079632679 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}left_wheel_joint" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}left_wheel"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <!-- rotate about Y (axle) -->
+      <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- ========= Right wheel ========= -->
+    <link name="${prefix}right_wheel">
+      <visual>
+        <origin xyz="0 ${-wheel_y} ${wheel_z}" rpy="1.57079632679 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+        <material name="mat_wheel"/>
+      </visual>
+
+      <collision>
+        <origin xyz="0 ${-wheel_y} ${wheel_z}" rpy="1.57079632679 0 0"/>
+        <geometry>
+          <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}right_wheel_joint" type="fixed">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}right_wheel"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+    </joint>
+
+  </xacro:macro>
+
+  <!-- keep your existing pattern -->
+  <xacro:diffbot prefix="$(arg prefix)"/>
+
+</robot>
+
