@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            "simple_diff_drive = airobot_sim.simple_diff_drive:main",
         ],
     },
 )
