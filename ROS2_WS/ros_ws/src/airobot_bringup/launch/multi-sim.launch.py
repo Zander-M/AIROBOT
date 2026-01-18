@@ -1,4 +1,0 @@
-"""
-Launch Multi-agent Simulation
-"""
-

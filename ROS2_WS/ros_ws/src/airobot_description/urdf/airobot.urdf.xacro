@@ -27,7 +27,6 @@
     <xacro:property name="wheel_z" value="${wheel_radius}"/>
 
     <!-- ========= Frames ========= -->
-    <link name="${prefix}odom"/>
 
     <!-- Base (chassis) -->
     <link name="${prefix}base_link">
@@ -47,11 +46,6 @@
         </geometry>
       </collision>
     </link>
-
-    <joint name="${prefix}odom_to_base" type="fixed">
-      <parent link="${prefix}odom"/>
-      <child link="${prefix}base_link"/>
-    </joint>
 
     <!-- ========= Left wheel ========= -->
     <link name="${prefix}left_wheel">
