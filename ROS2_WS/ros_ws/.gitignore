@@ -1,0 +1,58 @@
+# ================================
+# ROS 2 build artifacts
+# ================================
+build/
+install/
+log/
+
+# colcon
+.colcon/
+.colcon.log
+
+# ================================
+# Python
+# ================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+
+# ================================
+# CMake / C++
+# ================================
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# ================================
+# IDEs / editors
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ================================
+# OS junk
+# ================================
+.DS_Store
+Thumbs.db
+
+# ================================
+# Generated files
+# ================================
+*.log
+*.bag
+*.bag.active
+*.bag.lock
+
+# RViz auto-saves (optional)
+*.rviz~
