@@ -9,10 +9,12 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#include "esp_log.h"
 #include "motor_control.h"
 #include "wheels.h"
 #include "robot_params.h"
 
+static const char* TAG = "motor_control";
 
 static inline float radps_to_ticks(float radps) {
     return radps * (TICKS_PER_REV / TWO_PI);
@@ -41,7 +43,6 @@ void setMotorFromTwist(geometry_msgs__msg__Twist* msg) {
 
     setLeftTarget(l_tps);
     setRightTarget(r_tps);
-
     // printf("Twist: v=%.2f m/s, w=%.2f rad/s | Targets: L=%.2f tps, R=%.2f tps\n",
     //        v, w, l_tps, r_tps);
 }

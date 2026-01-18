@@ -7,5 +7,6 @@
         "motor_control.h": "c"
     },
     "idf.flashType": "UART",
-    "idf.port": "/dev/ttyUSB0"
+    "idf.port": "/dev/ttyUSB0",
+    "ROS2.distro": "jazzy"
 }

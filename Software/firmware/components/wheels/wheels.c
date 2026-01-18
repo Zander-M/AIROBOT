@@ -13,7 +13,7 @@
 #include "wheels.h"
 #include "robot_params.h"
 
-static const char* TAG="WHEELS";
+static const char* TAG="wheels";
 
 // Encoder Positions 
 volatile int l_pos = 0; 
@@ -213,7 +213,7 @@ void wheel_run() {
         ledc_set_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_2, 0);
         ledc_update_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_2);
     }
-
+    ESP_LOGI(TAG, "l_prm: %d    r_pwm: %d", l_pwm, r_pwm);
 }
 
 // setters
