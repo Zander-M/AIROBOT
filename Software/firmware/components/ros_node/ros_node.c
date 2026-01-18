@@ -23,6 +23,7 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "esp_system.h"
+#include "esp_mac.h"
 #endif
 
 // Callback declaration
@@ -33,6 +34,21 @@ void led_callback(const void *msgin);
 
 geometry_msgs__msg__Twist vel_msg;
 std_msgs__msg__ColorRGBA led_msg;
+
+static void make_robot_namespace(char *ns, size_t ns_len) {
+    // Create namespace using mac address
+    uint8_t mac[6];
+    esp_read_mac(mac, ESP_MAC_WIFI_STA);
+
+    // Example: /r_a1b2c3  (last 3 bytes, usually enough uniqueness)
+    snprintf(ns, ns_len, "/r_%02x%02x%02x", mac[3], mac[4], mac[5]);
+}
+
+static void make_node_name(char *name, size_t name_len) {
+    uint8_t mac[6];
+    esp_read_mac(mac, ESP_MAC_WIFI_STA);
+    snprintf(name, name_len, "esp32_diffdrive_%02x%02x%02x", mac[3], mac[4], mac[5]);
+}
 
 void ros_task(void *arg) {
     // Init micro-ROS support
@@ -52,7 +68,12 @@ void ros_task(void *arg) {
 
     // Create ros node
     rcl_node_t node;
-    RCCHECK(rclc_node_init_default(&node, "ros_esp32_diffdrive", "", &support));
+    char ns[32];
+    char node_name[64];
+    make_robot_namespace(ns, sizeof(ns));
+    make_node_name(node_name, sizeof(node_name));
+
+    RCCHECK(rclc_node_init_default(&node, node_name, ns, &support));
 
     // Create subscriber
     rcl_subscription_t vel_sub;
@@ -60,14 +81,14 @@ void ros_task(void *arg) {
         &vel_sub,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist),
-        "/cmd_vel"));
+        "cmd_vel"));
 
     rcl_subscription_t led_sub;
     RCCHECK(rclc_subscription_init_default(
         &led_sub,
         &node,
         ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, ColorRGBA),
-        "/led_color"));
+        "led_color"));
 
     // Timer
     rcl_timer_t timer;
