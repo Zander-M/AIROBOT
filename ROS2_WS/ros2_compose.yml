@@ -1,0 +1,26 @@
+services:
+  ros2:
+    image: osrf/ros:rolling-desktop-full
+    container_name: ros2-airob
+    network_mode: host
+    privileged: true
+
+    volumes:
+      - ./ros_ws:/ros_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+
+      # ROS 2 / DDS settings
+      - ROS_DOMAIN_ID=${ROS_DOMAIN_ID:-0}
+      - ROS_LOCALHOST_ONLY=${ROS_LOCALHOST_ONLY:-0}
+
+      # Optional: choose DDS vendor explicitly (CycloneDDS is a common pick)
+      # - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+    stdin_open: true
+    tty: true
+    working_dir: /ros_ws
+    command: bash
