@@ -9,7 +9,6 @@ from dataclasses import dataclass
 
 import rclpy
 from rclpy.node import Node
-from rclpy.time import Time
 
 from geometry_msgs.msg import Twist, TransformStamped
 from nav_msgs.msg import Odometry
@@ -123,8 +122,9 @@ class DiffDriveNode(Node):
         """
         Publish odometry
         """
+        stamp_msg = stamp.to_msg()
         odom = Odometry()
-        odom.header.stamp = stamp.to_msg()
+        odom.header.stamp = stamp_msg
         odom.header.frame_id = self.odom_frame
         odom.child_frame_id = self.base_frame
 
@@ -146,7 +146,7 @@ class DiffDriveNode(Node):
 
         if self.tf_broadcaster is not None:
             t = TransformStamped()
-            t.header.stamp = stamp.to_msg()
+            t.header.stamp = stamp_msg
             t.header.frame_id = self.odom_frame
             t.child_frame_id = self.base_frame
 
