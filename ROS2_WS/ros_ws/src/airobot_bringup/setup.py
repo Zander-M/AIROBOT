@@ -13,10 +13,10 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='Zander-M',
+    maintainer='zdrrrm',
     maintainer_email='zm800@nyu.edu',
     description='TODO: Package description',
-    license='TODO: License declaration',
+    license='MIT',
     extras_require={
         'test': [
             'pytest',
