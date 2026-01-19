@@ -16,8 +16,8 @@
 static const char* TAG="wheels";
 
 // Encoder Positions 
-volatile int l_pos = 0; 
-volatile int r_pos = 0; 
+volatile int64_t l_pos = 0; 
+volatile int64_t r_pos = 0; 
 
 // Targets in tics per second 
 volatile float l_target_speed = 0;
@@ -213,7 +213,12 @@ void wheel_run() {
         ledc_set_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_2, 0);
         ledc_update_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_2);
     }
-    ESP_LOGI(TAG, "l_prm: %d    r_pwm: %d", l_pwm, r_pwm);
+    // ESP_LOGI(TAG, "l_prm: %d    r_pwm: %d", l_pwm, r_pwm);
+}
+
+void wheel_get_counts(int64_t* left, int64_t* right) {
+    *left = l_pos;
+    *right = r_pos;
 }
 
 // setters
@@ -224,3 +229,4 @@ void setLeftTarget(float target_ticks_per_s) {
 void setRightTarget(float target_ticks_per_s) {
     r_target_speed = RIGHT_DIR * target_ticks_per_s;
 }
+
