@@ -32,8 +32,19 @@ def robot(prefix: str, x: float, y: float, z: float):
         parameters=[{"robot_description": urdf_xml}],
     )
 
-    # Publishes world -> <prefix>odom (Rolling requires flag args)
-    static_tf = Node(
+    sim = Node(
+        package="airobot_sim",
+        executable="simple_diff_drive",
+        namespace=ns,
+        name="simple_diff_drive",
+        output="screen",
+        parameters=[{"rate_hz": 50.0,
+                     "publish_tf": True,
+                     "odom_frame": f"{prefix}odom",
+                     "base_frame": f"{prefix}base_link",
+                     }],
+    )   
+    static_tf_world_to_odom = Node(
         package="tf2_ros",
         executable="static_transform_publisher",
         name=f"static_tf_{ns}",
@@ -64,7 +75,8 @@ def robot(prefix: str, x: float, y: float, z: float):
         ],
     )
 
-    return [rsp, static_tf, desc_pub]
+    return [rsp, sim, static_tf_world_to_odom, desc_pub]
+
 
 
 def generate_launch_description():
