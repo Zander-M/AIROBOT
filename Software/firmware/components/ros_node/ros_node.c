@@ -6,6 +6,7 @@
 
 #include "ros_node.h"
 #include "motor_control.h"
+#include "wheels.h"
 #include "led.h"
 
 #include <rcl/rcl.h>
@@ -13,6 +14,7 @@
 #include <rclc/executor.h>
 #include <geometry_msgs/msg/twist.h>
 #include <std_msgs/msg/color_rgba.h>
+#include <std_msgs/msg/int64_multi_array.h>
 
 #ifdef CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE
 	#include <rmw_microros/rmw_microros.h>
@@ -34,6 +36,12 @@ void led_callback(const void *msgin);
 
 geometry_msgs__msg__Twist vel_msg;
 std_msgs__msg__ColorRGBA led_msg;
+std_msgs__msg__Int64MultiArray enc_msg;
+
+static int64_t enc_data[2]; // [left, right]
+rcl_publisher_t encoder_pub;
+
+
 
 static void make_robot_namespace(char *ns, size_t ns_len) {
     // Create namespace using mac address
@@ -74,6 +82,18 @@ void ros_task(void *arg) {
     make_node_name(node_name, sizeof(node_name));
 
     RCCHECK(rclc_node_init_default(&node, node_name, ns, &support));
+    
+    // Create Publisher
+    RCCHECK(rclc_publisher_init_default(
+        &encoder_pub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int64MultiArray),
+        "enc_counts"
+    ));
+
+    enc_msg.data.data = enc_data;
+    enc_msg.data.size = 2;
+    enc_msg.data.capacity = 2;
 
     // Create subscriber
     rcl_subscription_t vel_sub;
@@ -116,7 +136,14 @@ void cmd_vel_callback(const void * msgin){
 }
 
 void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {
+    (void) last_call_time;
+
     setMotorFromTwist(&vel_msg);
+    int64_t l, r;
+    wheel_get_counts(&l, &r);
+    enc_data[0] = l;
+    enc_data[1] = r;
+    rcl_publish(&encoder_pub, &enc_msg, NULL);
 }
 
 void led_callback(const void *msgin){
