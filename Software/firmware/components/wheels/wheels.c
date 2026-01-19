@@ -24,8 +24,8 @@ volatile float l_target_speed = 0;
 volatile float r_target_speed = 0;
 
 // Previous encoder counts for velocity calc
-int l_prev_count = 0;
-int r_prev_count = 0;
+int64_t l_prev_count = 0;
+int64_t r_prev_count = 0;
 
 // Prev time
 int64_t prevT = 0;
@@ -154,10 +154,10 @@ void wheel_run() {
     prevT = currT;
 
     // read encoder deltas
-    int l_count = l_pos;
-    int r_count = r_pos;
-    int l_delta = l_count - l_prev_count;
-    int r_delta = r_count - r_prev_count;
+    int64_t l_count = l_pos;
+    int64_t r_count = r_pos;
+    int64_t l_delta = l_count - l_prev_count;
+    int64_t r_delta = r_count - r_prev_count;
     l_prev_count = l_count;
     r_prev_count = r_count;
 
@@ -229,4 +229,3 @@ void setLeftTarget(float target_ticks_per_s) {
 void setRightTarget(float target_ticks_per_s) {
     r_target_speed = RIGHT_DIR * target_ticks_per_s;
 }
-
