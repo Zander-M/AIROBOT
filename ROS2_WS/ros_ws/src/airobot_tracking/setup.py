@@ -1,6 +1,8 @@
+import os
+from glob import glob
 from setuptools import find_packages, setup
 
-package_name = 'airobot_sim'
+package_name = 'airobot_tracking'
 
 setup(
     name=package_name,
@@ -10,13 +12,16 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, "trajectory_data"), 
+         glob("trajectory_data/*.pkl"))
     ],
+    package_data={'': ['py.typed']},
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Zander Mao',
     maintainer_email='zma40@sfu.ca',
     description='TODO: Package description',
-    license='MIT',
+    license='TODO: License declaration',
     extras_require={
         'test': [
             'pytest',
@@ -24,7 +29,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            "simple_diff_drive = airobot_sim.simple_diff_drive:main",
         ],
     },
 )
