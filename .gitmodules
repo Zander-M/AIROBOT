@@ -7,3 +7,9 @@
 [submodule "Software/micro_ros_espidf_component"]
 	path = Software/micro_ros_espidf_component
 	url = https://github.com/micro-ROS/micro_ros_espidf_component
+[submodule "ROS2_WS/ros_ws/src/micro_ros_msgs"]
+	path = ROS2_WS/ros_ws/src/micro_ros_msgs
+	url = https://github.com/micro-ROS/micro_ros_msgs
+[submodule "ROS2_WS/ros_ws/src/micro-ROS-Agent"]
+	path = ROS2_WS/ros_ws/src/micro-ROS-Agent
+	url = https://github.com/micro-ROS/micro-ROS-Agent
