@@ -1,3 +1,4 @@
 docs/credentials.md
 **/.vscode/**
 **/build/**
+.DS_Store
