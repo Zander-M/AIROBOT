@@ -107,10 +107,9 @@ class DiffDriveNode(Node):
         x, y, yaw = self.state.x, self.state.y, self.state.yaw
         v, w = self.v_cmd, self.w_cmd
 
-
-        x += self.v_cmd * math.cos(yaw) * dt
-        y += self.v_cmd * math.sin(yaw) * dt
-        yaw += self.w_cmd * dt
+        x += v * math.cos(yaw) * dt
+        y += v * math.sin(yaw) * dt
+        yaw += w * dt
 
         # Keep yaw between [-pi, pi]
         yaw = (yaw + math.pi) % (2 * math.pi) - math.pi
@@ -120,7 +119,7 @@ class DiffDriveNode(Node):
 
     def publish_odom(self, stamp, v:float, w:float):
         """
-        Publish odometry
+        Publish odometry. We assume the system is perfect so the odom matches system state exactly.
         """
         stamp_msg = stamp.to_msg()
         odom = Odometry()
