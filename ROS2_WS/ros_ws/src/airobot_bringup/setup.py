@@ -28,7 +28,8 @@ setup(
         ],
     },
     entry_points={
-        'console_scripts': [
+        'console_scripts': [        
+            "experiment_keyboard = airobot_bringup.experiment_keyboard:main",
         ],
     },
 )
