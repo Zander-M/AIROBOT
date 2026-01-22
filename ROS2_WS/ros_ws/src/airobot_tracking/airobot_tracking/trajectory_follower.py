@@ -19,8 +19,7 @@ from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String
 
-from st_trajectory import STTrajectory
-
+from airobot_common import STTrajectory
 
 # --- Utils ---
 
@@ -112,18 +111,16 @@ class TrajectoryFollowerNode(Node):
             self.get_logger().error(f"Trajectory file not found: {path}")
             return
 
+        # Loading list of dicts.
         try:
             with path.open("rb") as f:
                 obj = pickle.load(f)
         except Exception as e:
             self.get_logger().error(f"Failed to load trajectory pickle: {e}")
             return
+        st_trajs = [STTrajectory.from_dict(traj_d) for traj_d in obj]
 
-        if not isinstance(obj, STTrajectory):
-            self.get_logger().error(f"Pickle did not contain STTrajectory. Got: {type(obj)}")
-            return  # IMPORTANT
-
-        self._traj = obj
+        self._traj = st_trajs[0] # FIXME: San check, load first trajectory for testing.
 
         if self._traj.size <= 0:
             self.get_logger().error("Trajectory is empty.")
@@ -206,8 +203,12 @@ class TrajectoryFollowerNode(Node):
             self._publish_stop()
             return
 
-        now_ros = self._state.stamp
+        now_ros = self.get_clock().now()
         dt = (now_ros - self._t0_ros).nanoseconds * 1e-9
+        if dt < 0.0:
+            self.get_logger().warm("Clock jumped backwards; resetting t0.")
+            self._t0_ros = now_ros
+            dt = 0.0
 
         # Trajectory time query (traj time is absolute in its own frame)
         t_query = float(self._traj.x0[-1] + dt)

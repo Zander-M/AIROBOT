@@ -1,8 +1,6 @@
-import os
-from glob import glob
 from setuptools import find_packages, setup
 
-package_name = 'airobot_tracking'
+package_name = 'airobot_common'
 
 setup(
     name=package_name,
@@ -12,8 +10,6 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, "trajectory_data"), 
-         glob("trajectory_data/*.pkl"))
     ],
     package_data={'': ['py.typed']},
     install_requires=['setuptools'],
@@ -21,7 +17,7 @@ setup(
     maintainer='Zander Mao',
     maintainer_email='zma40@sfu.ca',
     description='TODO: Package description',
-    license='TODO: License declaration',
+    license='MIT',
     extras_require={
         'test': [
             'pytest',
@@ -29,8 +25,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-
-            "trajecotry_follower=airobot_tracking.trajctory_follower:main",
         ],
     },
 )

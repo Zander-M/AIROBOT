@@ -34,6 +34,19 @@ class STTrajectory:
     def duration(self) -> float:
         return self.xT[-1] - self.x0[-1]
 
+    @staticmethod
+    def to_dict(self) -> dict:
+        return {
+        "vertex_path": self.vertex_path,
+        "space_dim": self.dim - 1,
+        "points": [p.tolist() for p in self.points]
+        }
+
+    @staticmethod
+    def from_dict(d:dict):
+        points = [np.asarray(p, dtype=float) for p in d["points"]]
+        return STTrajectory(d["vertex_path"], points, int(d["space_dim"]))
+
     def lerp(self, t:float) -> np.ndarray:
         if t <= self.x0[-1]:
             return self.points[0][:self.dim]
