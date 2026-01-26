@@ -17,6 +17,9 @@ class STTrajectory:
     
     def copy(self) -> STTrajectory:
         return STTrajectory(deepcopy(self.vertex_path), deepcopy(self.points), self.dim - 1)
+    
+    def _space_dim(self) -> int:
+        return self.dim - 1
 
     @property
     def size(self) -> int:
@@ -115,3 +118,36 @@ class STTrajectory:
     
     def xB(self, idx:int) -> np.ndarray:
         return self.points[idx][self.dim:]
+
+    def transform_space_time(
+        self,
+        space_scale: float = 1.0,
+        time_scale: float = 1.0,
+        x_offset: float = -5.0,
+        y_offset: float = -5.0,
+    ) -> "STTrajectory":
+        """
+        Scale space and time independently and return a new trajectory.
+        - s_space: float or (space_dim,) per-axis scale
+        - s_time: scalar time scale
+        """
+        out = self.copy()
+        space_dim = out._space_dim()
+
+        s_space_vec = np.full(space_dim, float(space_scale))
+        time_scale = float(time_scale)
+
+        # Anchor
+        origin_full = np.zeros(space_dim, dtype=float)
+        o_space = origin_full[:space_dim]
+        o_time = float(origin_full[-1])
+        offset = np.array([x_offset, y_offset], dtype=float)
+
+        def _scale_state(x: np.ndarray) -> np.ndarray:
+            x = np.asarray(x, dtype=float).copy()
+            x[:space_dim] = o_space + (x[:space_dim] - o_space) * s_space_vec + offset
+            x[-1] = o_time + (x[-1] - o_time) * time_scale
+            return x
+
+        out.points = [np.hstack([_scale_state(p[:out.dim]), _scale_state(p[out.dim:])]) for p in out.points]
+        return out

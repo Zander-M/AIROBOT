@@ -35,6 +35,11 @@ class TrajectoryVisualizer(Node):
         # ---- Parameters ----
         self.declare_parameter("trajectory_path", "")
         self.declare_parameter("frame_id", "odom")
+        self.declare_parameter("trajectory_index", 0)
+        self.declare_parameter("trajectory_space_scale", 5.0)   # Scaling space/time to satisfy constraints
+        self.declare_parameter("trajectory_time_scale",  10.0)   #
+        self.declare_parameter("trajectory_space_x_offset", -5.0)   # Scaling space/time to satisfy constraints
+        self.declare_parameter("trajectory_space_y_offset", -5.0)   # Scaling space/time to satisfy constraints
 
         self.declare_parameter("path_topic", "trajectory/path")
         self.declare_parameter("marker_topic", "trajectory/marker")
@@ -59,9 +64,15 @@ class TrajectoryVisualizer(Node):
             durability=DurabilityPolicy.TRANSIENT_LOCAL,
         )
 
+        traj_idx = int(self.get_parameter("trajectory_index").value)
+
         path_topic = str(self.get_parameter("path_topic").value)
         marker_topic = str(self.get_parameter("marker_topic").value)
         desired_topic = str(self.get_parameter("desired_topic").value)
+
+        path_topic = f"{path_topic}_{traj_idx}"
+        marker_topic = f"{marker_topic}_{traj_idx}"
+        desired_topic = f"{desired_topic}_{traj_idx}"
 
         self._path_pub = self.create_publisher(PathMsg, path_topic, latched_qos)
         self._marker_pub = self.create_publisher(Marker, marker_topic, latched_qos)
@@ -90,24 +101,37 @@ class TrajectoryVisualizer(Node):
 
         try:
             with p.open("rb") as f:
-                obj = pickle.load(f)
+                trajs_dicts = pickle.load(f)
         except Exception as e:
             self.get_logger().error(f"Failed to load trajectory pickle: {e}")
             return
         
-        obj = STTrajectory.from_dict(obj[1])
+        traj_idx = self.get_parameter("trajectory_index").value
 
-        if obj.size <= 0:
+        if len(trajs_dicts) <= traj_idx:
+            self.get_logger().error(f"Invalid trajectory index {traj_idx}. Displaying the first trajectory.")
+            traj_idx = 0
+
+        traj = STTrajectory.from_dict(trajs_dicts[traj_idx])
+
+        if traj.size <= 0:
             self.get_logger().error("Trajectory is empty.")
             return
-        if obj.dim < 2:
-            self.get_logger().error(f"Trajectory dim seems wrong: traj.dim={obj.dim} (includes time)")
+        if traj.dim < 2:
+            self.get_logger().error(f"Trajectory dim seems wrong: traj.dim={trajs_dicts.dim} (includes time)")
             return
 
-        self._traj = obj
+        # Scaling
+        space_scale = float(self.get_parameter("trajectory_space_scale").value)
+        time_scale = float(self.get_parameter("trajectory_time_scale").value)
+        x_offset = float(self.get_parameter("trajectory_space_x_offset").value)
+        y_offset = float(self.get_parameter("trajectory_space_y_offset").value)
+
+        self._traj = traj.transform_space_time(space_scale, time_scale, x_offset, y_offset)
+
         self.get_logger().info(
-            f"Loaded trajectory: segments={obj.size}, dim_with_time={obj.dim}, "
-            f"t0={obj.x0[-1]:.3f}, tT={obj.xT[-1]:.3f}, duration={obj.duration:.3f}s"
+            f"Loaded trajectory: segments={traj.size}, dim_with_time={traj.dim}, "
+            f"t0={traj.x0[-1]:.3f}, tT={traj.xT[-1]:.3f}, duration={traj.duration:.3f}s"
         )
 
     def _build_cached_messages(self) -> None:
