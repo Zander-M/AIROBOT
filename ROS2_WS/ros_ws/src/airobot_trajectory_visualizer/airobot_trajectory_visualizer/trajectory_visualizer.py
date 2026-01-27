@@ -38,8 +38,8 @@ class TrajectoryVisualizer(Node):
         self.declare_parameter("trajectory_index", 0)
         self.declare_parameter("trajectory_space_scale", 5.0)   # Scaling space/time to satisfy constraints
         self.declare_parameter("trajectory_time_scale",  10.0)   #
-        self.declare_parameter("trajectory_space_x_offset", -5.0)   # Scaling space/time to satisfy constraints
-        self.declare_parameter("trajectory_space_y_offset", -5.0)   # Scaling space/time to satisfy constraints
+        self.declare_parameter("trajectory_space_x_offset", -8.0)   # Scaling space/time to satisfy constraints
+        self.declare_parameter("trajectory_space_y_offset", -8.0)   # Scaling space/time to satisfy constraints
 
         self.declare_parameter("path_topic", "trajectory/path")
         self.declare_parameter("marker_topic", "trajectory/marker")
