@@ -79,10 +79,17 @@ class ExperimentKeyboardNode(Node):
                 self._publish_cmd("reset")
             elif ch == "q":
                 self.get_logger().info("Quit.")
-                self.destroy_node()
+                rclpy.shutdown()
+                return
             else:
                 # ignore other keys
-                pass
+                self.get_logger().info(
+                    "Experiment keyboard ready:\n"
+                    "  s: start\n"
+                    "  x: stop\n"
+                    "  r: reset\n"
+                    "  q: quit\n"
+                )
 
 
 def main():
@@ -98,10 +105,10 @@ def main():
                 node.destroy_node()
             except Exception:
                 pass
-    try:
-        rclpy.shutdown()
-    except RuntimeError:
-        pass
+            try:
+                rclpy.shutdown()
+            except RuntimeError:
+                pass
 
 
 if __name__ == "__main__":
