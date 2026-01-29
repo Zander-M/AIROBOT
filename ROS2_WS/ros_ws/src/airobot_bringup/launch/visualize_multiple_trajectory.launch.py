@@ -20,12 +20,12 @@ def generate_launch_description():
 
     nodes = [
         DeclareLaunchArgument("trajectory_pkg", default_value="airobot_data"),
-        DeclareLaunchArgument("trajectory_file", default_value="test_sol.pkl"),
+        DeclareLaunchArgument("trajectory_file", default_value="test_sol_transformed.pkl"),
         DeclareLaunchArgument("frame_id", default_value="odom"),
     ]
 
     # Trajectory Nodes
-    for i in range(5):
+    for i in range(15):
         nodes +=[
         Node(
             package="airobot_trajectory_visualizer",

@@ -14,7 +14,8 @@ from geometry_msgs.msg import Twist, TransformStamped
 from nav_msgs.msg import Odometry
 
 from tf2_ros import TransformBroadcaster
-from turtlesim.srv import TeleporrtAbsolute
+
+from airobot_msgs.srv import SetPose2D
 
 ##### Util Functions #####
 
@@ -73,7 +74,7 @@ class DiffDriveNode(Node):
         period = 1.0 / max(self.rate_hz, 1e-6)
         self.timer = self.create_timer(period, self.cb_timer) # create timer for state updates
 
-        self.setpose_srv = self.create_service(TeleporrtAbsolute, "set_pose", self.cb_set_pose)
+        self.setpose_srv = self.create_service(SetPose2D, "set_pose", self.cb_set_pose)
  
         self.get_logger().info(
             f"airobot simple_diff_dirve started: cmd_vel -> odom at {self.rate_hz} Hz. "
@@ -120,13 +121,13 @@ class DiffDriveNode(Node):
         self.state = State2D(x, y, yaw)
         self.publish_odom(now, v, w)
     
-    def cb_set_pose(self, req: TeleporrtAbsolute.Request, resp: TeleporrtAbsolute.Response):
+    def cb_set_pose(self, req: SetPose2D.Request, resp: SetPose2D.Response):
         """
         Reset robot positions in simulation
         """
         self.state.x = float(req.x)
         self.state.y = float(req.y)
-        self.state.yaw = float((req.theta + math.pi) % (2 * math.pi) - math.pi)
+        self.state.yaw = float((req.yaw + math.pi) % (2 * math.pi) - math.pi)
 
         # Stop motion immediately
         self.v_cmd = 0.0
@@ -142,6 +143,8 @@ class DiffDriveNode(Node):
         self.get_logger().info(
             f"set_pose: x={self.state.x:.3f}, y={self.state.y:.3f}, yaw={self.state.yaw:.3f}"
         )
+        resp.ok = True
+        resp.message = f"set_pose: x={self.state.x:.3f}, y={self.state.y:.3f}, yaw={self.state.yaw:.3f}"
         return resp
 
     def publish_odom(self, stamp, v:float, w:float):

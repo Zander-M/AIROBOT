@@ -30,7 +30,7 @@ setup(
     entry_points={
         'console_scripts': [
 
-            "trajecotry_follower=airobot_tracking.trajctory_follower:main",
+            "trajectory_follower=airobot_tracking.trajectory_follower:main",
         ],
     },
 )

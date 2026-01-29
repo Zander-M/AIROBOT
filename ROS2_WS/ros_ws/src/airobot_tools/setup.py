@@ -1,8 +1,6 @@
-import os
-from glob import glob
 from setuptools import find_packages, setup
 
-package_name = 'airobot_bringup'
+package_name = 'airobot_tools'
 
 setup(
     name=package_name,
@@ -12,15 +10,13 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'launch'),
-            glob('launch/*.launch.py')),
     ],
     package_data={'': ['py.typed']},
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Zander Mao',
     maintainer_email='zma40@sfu.ca',
-    description='AIROBOT launch script',
+    description='TODO: Package description',
     license='MIT',
     extras_require={
         'test': [
@@ -28,8 +24,7 @@ setup(
         ],
     },
     entry_points={
-        'console_scripts': [        
-            "experiment_controller = airobot_bringup.experiment_controller:main",
+        'console_scripts': [
         ],
     },
 )

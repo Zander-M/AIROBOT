@@ -36,19 +36,12 @@ class TrajectoryVisualizer(Node):
         self.declare_parameter("trajectory_path", "")
         self.declare_parameter("frame_id", "odom")
         self.declare_parameter("trajectory_index", 0)
-        self.declare_parameter("trajectory_space_scale", 5.0)   # Scaling space/time to satisfy constraints
-        self.declare_parameter("trajectory_time_scale",  10.0)   #
-        self.declare_parameter("trajectory_space_x_offset", -8.0)   # Scaling space/time to satisfy constraints
-        self.declare_parameter("trajectory_space_y_offset", -8.0)   # Scaling space/time to satisfy constraints
 
         self.declare_parameter("path_topic", "trajectory/path")
         self.declare_parameter("marker_topic", "trajectory/marker")
-        self.declare_parameter("desired_topic", "trajectory/desired")
 
-        self.declare_parameter("sample_dt_s", 0.05)       # sampling resolution along trajectory time
+        self.declare_parameter("sample_dt_s", 0.05) # sampling resolution along trajectory time
         self.declare_parameter("publish_rate_hz", 1.0)    # republish latched messages periodically
-        self.declare_parameter("publish_desired", True)   # publish desired pose “now”
-        self.declare_parameter("desired_lookahead_s", 0.05)
 
         self._traj: Optional[STTrajectory] = None
         self._cached_path: Optional[PathMsg] = None
@@ -68,15 +61,12 @@ class TrajectoryVisualizer(Node):
 
         path_topic = str(self.get_parameter("path_topic").value)
         marker_topic = str(self.get_parameter("marker_topic").value)
-        desired_topic = str(self.get_parameter("desired_topic").value)
 
         path_topic = f"{path_topic}_{traj_idx}"
         marker_topic = f"{marker_topic}_{traj_idx}"
-        desired_topic = f"{desired_topic}_{traj_idx}"
 
         self._path_pub = self.create_publisher(PathMsg, path_topic, latched_qos)
         self._marker_pub = self.create_publisher(Marker, marker_topic, latched_qos)
-        self._desired_pub = self.create_publisher(PoseStamped, desired_topic, 10)
 
         self._load_trajectory()
         self._build_cached_messages()
@@ -85,7 +75,7 @@ class TrajectoryVisualizer(Node):
         self._timer = self.create_timer(1.0 / max(rate_hz, 1e-6), self._on_timer)
 
         self.get_logger().info(
-            f"TrajectoryVisualizer up. path='{path_topic}', marker='{marker_topic}', desired='{desired_topic}'"
+            f"TrajectoryVisualizer up. path='{path_topic}', marker='{marker_topic}'"
         )
 
     def _load_trajectory(self) -> None:
@@ -121,13 +111,7 @@ class TrajectoryVisualizer(Node):
             self.get_logger().error(f"Trajectory dim seems wrong: traj.dim={trajs_dicts.dim} (includes time)")
             return
 
-        # Scaling
-        space_scale = float(self.get_parameter("trajectory_space_scale").value)
-        time_scale = float(self.get_parameter("trajectory_time_scale").value)
-        x_offset = float(self.get_parameter("trajectory_space_x_offset").value)
-        y_offset = float(self.get_parameter("trajectory_space_y_offset").value)
-
-        self._traj = traj.transform_space_time(space_scale, time_scale, x_offset, y_offset)
+        self._traj = traj
 
         self.get_logger().info(
             f"Loaded trajectory: segments={traj.size}, dim_with_time={traj.dim}, "
@@ -208,41 +192,6 @@ class TrajectoryVisualizer(Node):
         self._cached_path = path_msg
         self._cached_marker = marker
 
-    def _publish_desired_pose(self) -> None:
-        if self._traj is None:
-            return
-
-        now = self.get_clock().now()
-        dt = (now - self._node_start).nanoseconds * 1e-9
-
-        t_query = float(self._traj.x0[-1]) + dt
-        t_query = max(float(self._traj.x0[-1]), min(t_query, float(self._traj.xT[-1])))
-
-        xyt = np.asarray(self._traj.lerp(float(t_query)), dtype=float)
-        pos = xyt[:-1]
-
-        lookahead = max(float(self.get_parameter("desired_lookahead_s").value), 1e-3)
-        t2 = min(float(self._traj.xT[-1]), float(t_query + lookahead))
-        xyt2 = np.asarray(self._traj.lerp(float(t2)), dtype=float)
-        d = xyt2[:-1] - pos
-
-        yaw = _yaw_from_dxdy(float(d[0]), float(d[1]))
-        qx, qy, qz, qw = _quat_from_yaw(yaw)
-
-        frame_id = str(self.get_parameter("frame_id").value)
-
-        msg = PoseStamped()
-        msg.header.frame_id = frame_id
-        msg.header.stamp = now.to_msg()
-        msg.pose.position.x = float(pos[0])
-        msg.pose.position.y = float(pos[1])
-        msg.pose.position.z = 0.0
-        msg.pose.orientation.x = qx
-        msg.pose.orientation.y = qy
-        msg.pose.orientation.z = qz
-        msg.pose.orientation.w = qw
-        self._desired_pub.publish(msg)
-
     def _on_timer(self) -> None:
         stamp = self.get_clock().now().to_msg()
 
@@ -255,9 +204,6 @@ class TrajectoryVisualizer(Node):
         if self._cached_marker is not None:
             self._cached_marker.header.stamp = stamp
             self._marker_pub.publish(self._cached_marker)
-
-        if bool(self.get_parameter("publish_desired").value):
-            self._publish_desired_pose()
 
 
 def main():

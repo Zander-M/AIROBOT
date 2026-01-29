@@ -1,8 +1,9 @@
 services:
   ros2:
     image: osrf/ros:rolling-desktop-full
-    container_name: ros2-airob
-    network_mode: host
+    container_name: ros2-airob-local
+    hostname: ros2-airob-local
+    # network_mode: host
     privileged: false 
 
     command: ["sleep", "infinity"]
@@ -28,4 +29,3 @@ services:
 
     stdin_open: true
     tty: true
-
