@@ -25,7 +25,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            "trajectory_visualizer=airobot_trajectory_visualizer.trajectory_visualizer:main"
+            "trajectory_visualizer=airobot_trajectory_visualizer.trajectory_visualizer:main",
+            "trajectory_visualizer_numpy=airobot_trajectory_visualizer.trajectory_visualizer_np:main"
         ],
     },
 )

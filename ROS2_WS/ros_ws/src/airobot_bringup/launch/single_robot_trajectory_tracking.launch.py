@@ -79,7 +79,7 @@ def robot(robot_id: int):
     arguments=[
         "--x", "0", "--y", "0", "--z", "0",
         "--roll", "0", "--pitch", "0", "--yaw", "0",
-        "--frame-id", "world",
+        "--frame-id", frame_id,
         "--child-frame-id", f"{prefix}odom",
     ],
     )

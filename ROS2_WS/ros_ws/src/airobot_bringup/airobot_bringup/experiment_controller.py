@@ -170,7 +170,7 @@ class ExperimentControllerSimple(Node):
 
         yaw = 0.0
         if traj.size >= 2:
-            p1 = traj.points[1]
+            p1 = traj.points[10]
             yaw = _yaw_from_dxdy(float(p1[0] - p0[0]), float(p1[1] - p0[1]))
         return x, y, yaw
 
