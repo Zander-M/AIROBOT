@@ -29,8 +29,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-
             "trajectory_follower=airobot_tracking.trajectory_follower:main",
+            "trajectory_follower_numpy=airobot_tracking.trajectory_follower_np:main",
         ],
     },
 )

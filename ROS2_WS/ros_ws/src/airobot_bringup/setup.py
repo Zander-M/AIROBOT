@@ -30,6 +30,7 @@ setup(
     entry_points={
         'console_scripts': [        
             "experiment_controller = airobot_bringup.experiment_controller:main",
+            "experiment_controller_numpy = airobot_bringup.experiment_controller_np:main",
         ],
     },
 )
