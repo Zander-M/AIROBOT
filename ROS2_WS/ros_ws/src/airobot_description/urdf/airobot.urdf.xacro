@@ -42,7 +42,7 @@
       <collision>
         <origin xyz="0 0 ${wheel_radius + base_height/2.0}" rpy="0 0 0"/>
         <geometry>
-          <box size="${base_length} ${base_width} ${base_height}"/>
+          <box size="${base_length} ${base_width+wheel_width*2.0} ${base_height}"/>
         </geometry>
       </collision>
     </link>
