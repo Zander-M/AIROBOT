@@ -13,3 +13,6 @@
 [submodule "ROS2_WS/ros_ws/src/micro-ROS-Agent"]
 	path = ROS2_WS/ros_ws/src/micro-ROS-Agent
 	url = https://github.com/micro-ROS/micro-ROS-Agent
+[submodule "ROS2_WS/ros_ws/src/ros2-vicon-bridge"]
+	path = ROS2_WS/ros_ws/src/ros2-vicon-bridge
+	url = https://github.com/dasc-lab/ros2-vicon-bridge
