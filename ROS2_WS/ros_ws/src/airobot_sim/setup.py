@@ -13,8 +13,8 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='zdrrrm',
-    maintainer_email='zm800@nyu.edu',
+    maintainer='Zander Mao',
+    maintainer_email='zma40@sfu.ca',
     description='TODO: Package description',
     license='MIT',
     extras_require={

@@ -3,7 +3,13 @@ services:
     image: osrf/ros:rolling-desktop-full
     container_name: ros2-airob
     network_mode: host
-    privileged: true
+    privileged: false 
+
+    command: ["sleep", "infinity"]
+    init: true
+
+    user: "${HOST_UID}:${HOST_GID}"
+    working_dir: /ros_ws
 
     volumes:
       - ./ros_ws:/ros_ws
@@ -22,5 +28,4 @@ services:
 
     stdin_open: true
     tty: true
-    working_dir: /ros_ws
-    command: bash
+

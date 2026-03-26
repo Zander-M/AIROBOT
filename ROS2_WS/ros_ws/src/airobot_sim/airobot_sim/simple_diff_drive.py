@@ -15,6 +15,8 @@ from nav_msgs.msg import Odometry
 
 from tf2_ros import TransformBroadcaster
 
+from airobot_msgs.srv import SetPose2D
+
 ##### Util Functions #####
 
 def yaw2quat(yaw: float):
@@ -71,6 +73,8 @@ class DiffDriveNode(Node):
 
         period = 1.0 / max(self.rate_hz, 1e-6)
         self.timer = self.create_timer(period, self.cb_timer) # create timer for state updates
+
+        self.setpose_srv = self.create_service(SetPose2D, "set_pose", self.cb_set_pose)
  
         self.get_logger().info(
             f"airobot simple_diff_dirve started: cmd_vel -> odom at {self.rate_hz} Hz. "
@@ -107,20 +111,45 @@ class DiffDriveNode(Node):
         x, y, yaw = self.state.x, self.state.y, self.state.yaw
         v, w = self.v_cmd, self.w_cmd
 
-
-        x += self.v_cmd * math.cos(yaw) * dt
-        y += self.v_cmd * math.sin(yaw) * dt
-        yaw += self.w_cmd * dt
+        x += v * math.cos(yaw) * dt
+        y += v * math.sin(yaw) * dt
+        yaw += w * dt
 
         # Keep yaw between [-pi, pi]
         yaw = (yaw + math.pi) % (2 * math.pi) - math.pi
 
         self.state = State2D(x, y, yaw)
         self.publish_odom(now, v, w)
+    
+    def cb_set_pose(self, req: SetPose2D.Request, resp: SetPose2D.Response):
+        """
+        Reset robot positions in simulation
+        """
+        self.state.x = float(req.x)
+        self.state.y = float(req.y)
+        self.state.yaw = float((req.yaw + math.pi) % (2 * math.pi) - math.pi)
+
+        # Stop motion immediately
+        self.v_cmd = 0.0
+        self.w_cmd = 0.0
+
+        # Prevent a huge dt on next cb_timer()
+        now = self.get_clock().now()
+        self.last_update = now
+
+        # Optionally publish an immediate odom + tf update at zero velocity
+        self.publish_odom(now, 0.0, 0.0)
+
+        self.get_logger().info(
+            f"set_pose: x={self.state.x:.3f}, y={self.state.y:.3f}, yaw={self.state.yaw:.3f}"
+        )
+        resp.ok = True
+        resp.message = f"set_pose: x={self.state.x:.3f}, y={self.state.y:.3f}, yaw={self.state.yaw:.3f}"
+        return resp
 
     def publish_odom(self, stamp, v:float, w:float):
         """
-        Publish odometry
+        Publish odometry. We assume the system is perfect so the odom matches system state exactly.
         """
         stamp_msg = stamp.to_msg()
         odom = Odometry()

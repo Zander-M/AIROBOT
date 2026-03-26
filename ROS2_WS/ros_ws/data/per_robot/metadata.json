@@ -1,0 +1,8 @@
+{
+    "source_pkl": "/ros_ws/data/trajectories/test_sol_transformed.pkl",
+    "frame": "world",
+    "num_trajectory": 15,
+    "num_waypoints": 427,
+    "dt": 0.1,
+    "duration": 42.616805391881826
+}
