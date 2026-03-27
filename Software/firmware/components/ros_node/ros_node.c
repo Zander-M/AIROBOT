@@ -6,6 +6,7 @@
 
 #include "ros_node.h"
 #include "motor_control.h"
+#include "odom_pub.h"
 #include "wheels.h"
 #include "led.h"
 
@@ -13,11 +14,13 @@
 #include <rclc/rclc.h>
 #include <rclc/executor.h>
 #include <geometry_msgs/msg/twist.h>
+#include <nav_msgs/msg/odometry.h>
 #include <std_msgs/msg/color_rgba.h>
 #include <std_msgs/msg/int64_multi_array.h>
 
 #ifdef CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE
 	#include <rmw_microros/rmw_microros.h>
+    #include <rmw_microros/time_sync.h>
 #endif
 
 #ifdef ESP_PLATFORM
@@ -37,9 +40,11 @@ void led_callback(const void *msgin);
 geometry_msgs__msg__Twist vel_msg;
 std_msgs__msg__ColorRGBA led_msg;
 std_msgs__msg__Int64MultiArray enc_msg;
+nav_msgs__msg__Odometry odom_msg;
 
 static int64_t enc_data[2]; // [left, right]
 rcl_publisher_t encoder_pub;
+rcl_publisher_t odom_pub;
 
 
 
@@ -74,6 +79,10 @@ void ros_task(void *arg) {
 
     RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
 
+    #ifdef CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE
+    RCSOFTCHECK(rmw_uros_sync_session(1000));
+    #endif
+
     // Create ros node
     rcl_node_t node;
     char ns[32];
@@ -91,9 +100,21 @@ void ros_task(void *arg) {
         "enc_counts"
     ));
 
+    RCCHECK(rclc_publisher_init_default(
+        &odom_pub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(nav_msgs, msg, Odometry),
+        "odom"
+    ));
+
     enc_msg.data.data = enc_data;
     enc_msg.data.size = 2;
     enc_msg.data.capacity = 2;
+    odom_init();
+    if (!odom_prepare_msg(&odom_msg)) {
+        printf("Failed to prepare odometry message. Aborting.\n");
+        vTaskDelete(NULL);
+    }
 
     // Create subscriber
     rcl_subscription_t vel_sub;
@@ -143,7 +164,10 @@ void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {
     wheel_get_counts(&l, &r);
     enc_data[0] = l;
     enc_data[1] = r;
-    rcl_publish(&encoder_pub, &enc_msg, NULL);
+    odom_update();
+    odom_fill_msg(&odom_msg);
+    RCSOFTCHECK(rcl_publish(&encoder_pub, &enc_msg, NULL));
+    RCSOFTCHECK(rcl_publish(&odom_pub, &odom_msg, NULL));
 }
 
 void led_callback(const void *msgin){
