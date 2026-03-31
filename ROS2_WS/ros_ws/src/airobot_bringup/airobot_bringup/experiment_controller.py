@@ -1,41 +1,40 @@
+"""
+Experiment Controller with numpy trajectories (x, y, yaw, t)
+"""
 from __future__ import annotations
 
 import math
-import pickle
 import sys
 import select
 import termios
 import tty
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple
+import json
 
+import numpy as np
 import rclpy
 from rclpy.node import Node
-from rclpy.time import Time
 from std_msgs.msg import String
 
 from airobot_msgs.srv import SetPose2D
-from airobot_common import STTrajectory
 
 
-def _yaw_from_dxdy(dx: float, dy: float) -> float:
-    if abs(dx) + abs(dy) < 1e-12:
-        return 0.0
-    return math.atan2(dy, dx)
+def _wrap_to_pi(a: float) -> float:
+    return (a + math.pi) % (2.0 * math.pi) - math.pi
 
 
 @dataclass
-class PendingCall:
-    ns: str
-    future: Any
+class PendingReset:
+    epoch: int
+    pending: List[Tuple[str, Optional[Any]]]  # (ns, future) future can be None if skipped
 
 
 class ExperimentControllerSimple(Node):
     """
     Simple experiment controller:
 
-    - Loads trajectories from a pickle at startup.
     - 'r': teleport all robots to trajectory start via SetPose2D, then publish "reset <epoch>"
     - 's': publish "start <epoch> <t0_ns>"
     - 'x': publish "stop <epoch>"
@@ -47,17 +46,15 @@ class ExperimentControllerSimple(Node):
 
         # ---------------- Params ----------------
         self.declare_parameter("control_topic", "experiment/control")
-        self.declare_parameter("trajectories_pkl", "")
-        self.declare_parameter("robot_prefix", "robot")
-        self.declare_parameter("num_robots", 0)  # 0 => infer from trajectories if possible
+        self.declare_parameter("trajectory_path", "")
+        self.declare_parameter("num_robots", 0)  # 0 => use metadata num_trajectory
 
         self.declare_parameter("setpose_service", "set_pose")
         self.declare_parameter("start_delay_s", 0.25)
         self.declare_parameter("rate_hz", 30.0)
 
         self._control_topic = str(self.get_parameter("control_topic").value)
-        self._traj_pkl = str(self.get_parameter("trajectories_pkl").value)
-        self._robot_prefix = str(self.get_parameter("robot_prefix").value)
+        self._trajectory_path = str(self.get_parameter("trajectory_path").value)
         self._num_robots_param = int(self.get_parameter("num_robots").value)
 
         self._setpose_service = str(self.get_parameter("setpose_service").value)
@@ -65,21 +62,12 @@ class ExperimentControllerSimple(Node):
         self._rate_hz = float(self.get_parameter("rate_hz").value)
 
         # ---------------- Load trajectories ----------------
-        self._traj_by_ns: Dict[str, STTrajectory] = self._load_trajectories()
-
-        # Determine robot namespaces
-        if self._num_robots_param > 0:
-            self._namespaces = [f"{self._robot_prefix}{i}" for i in range(self._num_robots_param)]
-        else:
-            # infer from trajectories
-            if self._traj_by_ns:
-                self._namespaces = sorted(self._traj_by_ns.keys())
-            else:
-                self._namespaces = [f"{self._robot_prefix}0"]
-
+        # Dict: ns -> np.ndarray with shape (T,4) where each row is [x,y,yaw,t]
+        self._traj_by_ns: Dict[str, np.ndarray] = self._load_trajectories()
+        self._namespaces: List[str] = sorted(list(self._traj_by_ns.keys()))
         self.get_logger().info(f"Namespaces: {self._namespaces}")
 
-        # ---------------- Publisher(s): publish to each namespaced control topic ----------------
+        # ---------------- Publisher(s) ----------------
         self._control_pubs: List[Any] = []
         for ns in self._namespaces:
             topic = f"/{ns.strip('/')}/{self._control_topic.lstrip('/')}"
@@ -87,16 +75,15 @@ class ExperimentControllerSimple(Node):
         self.get_logger().info(f"Control pubs -> {self._namespaces} / {self._control_topic}")
 
         # ---------------- SetPose clients ----------------
-        self._setpose_clients: List[Tuple[str, Any]] = []
+        self._setpose_clients: Dict[str, Any] = {}
         for ns in self._namespaces:
             srv = f"/{ns.strip('/')}/{self._setpose_service.lstrip('/')}"
             cli = self.create_client(SetPose2D, srv)
-            self._setpose_clients.append((ns, cli))
+            self._setpose_clients[ns] = cli
 
         # ---------------- Runtime state ----------------
         self._epoch: int = 0
-        self._pending_calls: List[PendingCall] = []
-        self._reset_in_progress: bool = False
+        self._pending_reset: Optional[PendingReset] = None
 
         # ---------------- Terminal ----------------
         self._stdin_fd = sys.stdin.fileno()
@@ -122,35 +109,45 @@ class ExperimentControllerSimple(Node):
 
     # ---------------- Trajectory loading ----------------
 
-    def _load_trajectories(self) -> None:
-        path_str = self._traj_pkl.strip()
-        if not path_str:
-            self.get_logger().warning("No trajectory_path set. Provide -p trajectory_path:=/path/to/traj.pkl")
-            return
+    def _load_trajectories(self) -> Dict[str, np.ndarray]:
+        """
+        Load from directory containing:
+          - metadata.json with {"num_trajectory": K, ...}
+          - robot0.npy, robot1.npy, ...
+        Each npy is shape (T,4) row=[x,y,yaw,t]
+        """
+        trajectory_path = self._trajectory_path.strip()
+        if not trajectory_path:
+            raise ValueError("trajectory_path is empty (set -p trajectory_path:=...)")
 
-        path = Path(path_str)
-        if not path.exists():
-            self.get_logger().error(f"Trajectory file not found: {path}")
-            return
+        trajectory_path = Path(trajectory_path)
+        if not trajectory_path.exists():
+            raise FileNotFoundError(f"trajectory directory not found: {trajectory_path}")
 
-        try:
-            with path.open("rb") as f:
-                obj = pickle.load(f)
-        except Exception as e:
-            self.get_logger().error(f"Failed to load trajectory pickle: {e}")
-            return
+        metadata_path = trajectory_path / "metadata.json"
+        with metadata_path.open("r") as f:
+            metadata = json.load(f)
 
-        st_trajs = [STTrajectory.from_dict(traj_d) for traj_d in obj]
+        num_traj_meta = int(metadata.get("num_trajectory", 0))
+        if num_traj_meta <= 0:
+            raise ValueError("metadata.json missing/invalid num_trajectory")
 
-        trajs_by_ns_dict = {}
+        num_robots = self._num_robots_param if self._num_robots_param > 0 else num_traj_meta
+        num_robots = min(num_robots, num_traj_meta)
 
-        for robot_id, traj in enumerate(st_trajs[:1]): # FIXME: san check, load one trajectory only
-            trajs_by_ns_dict[f"robot{robot_id}"] = traj
-        self.get_logger().info(f"Loaded {len(st_trajs)} trajectories from {path_str}.")
-        return trajs_by_ns_dict
+        out: Dict[str, np.ndarray] = {}
+        for i in range(num_robots):
+            ns = f"robot{i}"
+            fname = trajectory_path / f"{ns}.npy"
+            traj = np.load(fname)
+            if traj.ndim != 2 or traj.shape[1] != 4 or traj.shape[0] < 1:
+                raise ValueError(f"{fname} must have shape (T,4) [x,y,yaw,t]; got {traj.shape}")
+            out[ns] = traj
 
+        self.get_logger().info(f"Loaded {len(out)} trajectories from {trajectory_path}")
+        return out
 
-    # ---------------- Helpers ----------------
+    # ---------------- Core helpers ----------------
 
     def _publish_control(self, text: str) -> None:
         msg = String()
@@ -159,98 +156,38 @@ class ExperimentControllerSimple(Node):
             p.publish(msg)
         self.get_logger().info(f"Sent: {text}")
 
-    def _start_pose_from_traj(self, traj: STTrajectory) -> Tuple[float, float, float]:
-        """
-        Uses first point as (x,y), and yaw from first segment if possible.
-        Assumes traj points are (x,y,t) or (x,y,...) where first two dims are xy.
-        """
-        p0 = traj.points[0]
-        x = float(p0[0])
-        y = float(p0[1])
-
-        yaw = 0.0
-        if traj.size >= 2:
-            p1 = traj.points[10]
-            yaw = _yaw_from_dxdy(float(p1[0] - p0[0]), float(p1[1] - p0[1]))
-        return x, y, yaw
-
-    # ---------------- Reset logic ----------------
-
-    def _begin_reset(self) -> None:
-        # stop first (good habit)
-        self._publish_control(f"stop {self._epoch}")
-
-        # ensure services are ready
-        for ns, cli in self._setpose_clients:
-            if not cli.service_is_ready():
-                self.get_logger().warning(f"Waiting for service: /{ns}/{self._setpose_service}")
-                # Don’t start reset yet; keep trying in tick()
-                self._reset_in_progress = True
-                self._pending_calls = []
-                return
-
-        # fire async calls
-        self._pending_calls = []
-        for ns, cli in self._setpose_clients:
-            traj = self._traj_by_ns.get(ns, None)
-            if traj is None:
-                # fallback
-                x, y, yaw = 0.0, 0.0, 0.0
-                self.get_logger().warning(f"No trajectory for {ns}; using (0,0,0).")
-            else:
-                x, y, yaw = self._start_pose_from_traj(traj)
-
-            req = SetPose2D.Request()
-            req.x = float(x)
-            req.y = float(y)
-            req.yaw = float(yaw)
-            fut = cli.call_async(req)
-            self._pending_calls.append(PendingCall(ns=ns, future=fut))
-
-        self._reset_in_progress = True
-        self.get_logger().info(f"Reset started for epoch={self._epoch} ({len(self._pending_calls)} calls).")
-
-    def _finish_reset_if_done(self) -> None:
-        if not self._reset_in_progress:
+    def _progress_pending_reset(self) -> None:
+        if self._pending_reset is None:
             return
 
-        # If we never launched calls due to service not ready, try again
-        if not self._pending_calls:
-            self._begin_reset()
-            return
+        still: List[Tuple[str, Optional[Any]]] = []
+        had_error = False
 
-        all_done = True
-        any_failed = False
-        for c in self._pending_calls:
-            fut = c.future
-            if not fut.done():
-                all_done = False
+        for ns, fut in self._pending_reset.pending:
+            if fut is None:
+                had_error = True
                 continue
-            if fut.exception() is not None:
-                any_failed = True
-                self.get_logger().error(f"SetPose2D failed for {c.ns}: {fut.exception()}")
+            if fut.done():
+                try:
+                    _ = fut.result()
+                except Exception as e:
+                    had_error = True
+                    self.get_logger().error(f"[{ns}] set_pose failed: {e}")
+            else:
+                still.append((ns, fut))
 
-        if not all_done:
-            return
+        self._pending_reset.pending = still
 
-        self._pending_calls = []
-        self._reset_in_progress = False
-
-        if any_failed:
-            self.get_logger().warning("Reset completed with failures; still publishing reset sync message.")
-
-        self._publish_control(f"reset {self._epoch}")
-
-    # ---------------- Main tick ----------------
-
-    def _send_start(self) -> None:
-        now = self.get_clock().now()
-        t0_ns = now.nanoseconds + int(max(self._start_delay_s, 0.0) * 1e9)
-        self._publish_control(f"start {self._epoch} {t0_ns}")
+        if not self._pending_reset.pending:
+            epoch = self._pending_reset.epoch
+            self._pending_reset = None
+            self._publish_control(f"reset {epoch}")
+            if had_error:
+                self.get_logger().warning("Reset published, but some set_pose calls failed/skipped.")
 
     def _tick(self) -> None:
-        # progress reset if in flight
-        self._finish_reset_if_done()
+        # progress any async reset
+        self._progress_pending_reset()
 
         # keyboard
         if select.select([sys.stdin], [], [], 0.0)[0]:
@@ -259,7 +196,7 @@ class ExperimentControllerSimple(Node):
             if ch == "r":
                 self._epoch += 1
                 self.get_logger().info(f"Reset requested -> epoch={self._epoch}")
-                self._begin_reset()
+                self._set_pose_request(pose_idx=0)
 
             elif ch == "s":
                 self._send_start()
@@ -271,6 +208,54 @@ class ExperimentControllerSimple(Node):
                 self.get_logger().info("Quit.")
                 rclpy.shutdown()
                 return
+
+    # ---------------- Missing pieces ----------------
+
+    def _send_start(self) -> None:
+        """
+        Send: start <epoch> <t0_ns>
+        """
+        now_ns = int(self.get_clock().now().nanoseconds)
+        t0_ns = now_ns + int(self._start_delay_s * 1e9)
+        self._publish_control(f"start {self._epoch} {t0_ns}")
+
+    def _set_pose_request(self, pose_idx: int) -> None:
+        """
+        Teleport all robots to pose_idx of their trajectory (x,y,yaw,t).
+        Publishes reset only after all service calls return (handled by _progress_pending_reset()).
+        """
+        if self._pending_reset is not None:
+            self.get_logger().warning("Reset already in progress; ignoring.")
+            return
+
+        pending: List[Tuple[str, Optional[Any]]] = []
+
+        for ns in self._namespaces:
+            traj = self._traj_by_ns[ns]
+            T = traj.shape[0]
+            i = int(np.clip(pose_idx, 0, T - 1))
+
+            x = float(traj[i, 0])
+            y = float(traj[i, 1])
+            yaw = _wrap_to_pi(float(traj[i, 2]))
+            # t = traj[i, 3]  # not needed for SetPose2D
+
+            cli = self._setpose_clients[ns]
+            if not cli.service_is_ready():
+                self.get_logger().warning(f"[{ns}] service not ready: {cli.srv_name}; skipping set_pose")
+                pending.append((ns, None))
+                continue
+
+            req = SetPose2D.Request()
+            req.x = x
+            req.y = y
+            req.yaw = yaw
+
+            fut = cli.call_async(req)
+            pending.append((ns, fut))
+            self.get_logger().info(f"[{ns}] set_pose -> x={x:.3f}, y={y:.3f}, yaw={yaw:.3f}")
+
+        self._pending_reset = PendingReset(epoch=self._epoch, pending=pending)
 
 
 def main():

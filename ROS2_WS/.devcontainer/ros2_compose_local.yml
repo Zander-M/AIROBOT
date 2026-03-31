@@ -1,8 +1,8 @@
 services:
   ros2:
-    image: osrf/ros:rolling-desktop-full
+    image: ros2_airobot 
     container_name: ros2-airob-local
-    hostname: ros2-airob-local
+    hostname: ros2-airobot
     # network_mode: host
     privileged: false 
 

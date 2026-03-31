@@ -127,7 +127,9 @@ def _robot(robot_id: int, context):
         ],
     )
 
-    nodes = [rsp, sim, world_to_odom, follower]
+
+
+    nodes = [rsp, sim, world_to_odom, follower, ]
 
     # Optional trajectory visualizer for numpy (publishes Path/Marker so Foxglove can show it)
     if publish_traj_viz:
@@ -149,16 +151,33 @@ def _robot(robot_id: int, context):
                 ],
             )
         )
+    
 
     return nodes
 
 
 def _make_nodes(context, *args, **kwargs):
     num_robots = int(LaunchConfiguration("num_robots").perform(context))
+    collision_threshold = float(LaunchConfiguration("collision_threshold").perform(context))
     nodes = []
 
     for rid in range(num_robots):
         nodes += _robot(rid, context)
+
+    # Collision Checking node
+    collision_detection = Node(
+        package="airobot_collision_detection",
+        executable="airobot_collision_detection",
+        name="collision_detection",
+        output="screen",
+        parameters=[
+            {
+                "num_robots": num_robots,
+                "collision_threshold": collision_threshold 
+            }
+        ],
+    )
+    nodes.append(collision_detection)
 
     # Foxglove
     nodes.append(
@@ -184,6 +203,7 @@ def generate_launch_description():
     return LaunchDescription(
         [
             DeclareLaunchArgument("num_robots", default_value="15"),
+            DeclareLaunchArgument("collision_threshold", default_value="0.08"),
 
             # directory with metadata.json and robot{i}.npy
             DeclareLaunchArgument("trajectory_dir", default_value=""),

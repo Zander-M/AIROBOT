@@ -101,7 +101,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--pkl_path", type=str, help="input path for list of STTrajectory")
     parser.add_argument("--output_path", type=str, help="output path for per-robot trajectory data")
-    parser.add_argument("--dt", type=float, default=0.1, help="time interval for each st waypoint")
+    parser.add_argument("--dt", type=float, default=0.05, help="time interval for each st waypoint")
 
     args = parser.parse_args()
     construct_per_robot_waypoints(args)
