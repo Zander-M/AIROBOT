@@ -1,8 +1,10 @@
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
+    calibration_file = get_package_share_directory("ros2_aruco_position") + "/camera_calibration.yaml"
     return LaunchDescription(
         [
             Node(
@@ -14,7 +16,7 @@ def generate_launch_description():
                     {
                         "video_device": "/dev/video2",
                         "camera_frame": "camera",
-                        "camera_calibration_file": "",
+                        "camera_calibration_file": calibration_file,
                         "detected_ids_topic": "/aruco/detected_ids",
                         "marker_length": 0.05,
                         "aruco_dictionary": "DICT_4X4_50",
@@ -26,9 +28,6 @@ def generate_launch_description():
                         "processing_scale": 0.75,
                         "frame_skip": 0,
                         "use_grayscale": True,
-                        "enable_kalman_filter": True,
-                        "kalman_process_noise": 5e-3,
-                        "kalman_measurement_noise": 5e-4,
                     }
                 ],
             )

@@ -4,6 +4,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 import rclpy
+from ament_index_python.packages import get_package_share_directory
 from geometry_msgs.msg import TransformStamped
 from rclpy.node import Node
 from std_msgs.msg import Int32MultiArray
@@ -15,6 +16,9 @@ ARUCO_DICTIONARIES = {
     for name in dir(cv2.aruco)
     if name.startswith("DICT_")
 }
+
+PACKAGE_NAME = "ros2_aruco_position"
+DEFAULT_CALIBRATION_FILE = "camera_calibration.yaml"
 
 
 def get_marker_corners_3d(marker_length: float) -> np.ndarray:
@@ -85,69 +89,6 @@ class OpenCVArucoDetector:
         return cv2.aruco.detectMarkers(frame, self._dictionary, parameters=self._params)
 
 
-class PoseKalmanFilter:
-    def __init__(self, dt: float, process_noise: float, measurement_noise: float) -> None:
-        self.translation_filter = self._create_filter(dt, process_noise, measurement_noise)
-        self.rotation_filter = self._create_filter(dt, process_noise, measurement_noise)
-        self.initialized = False
-
-    def _create_filter(self, dt: float, process_noise: float, measurement_noise: float):
-        kalman = cv2.KalmanFilter(6, 3)
-        kalman.transitionMatrix = np.array(
-            [
-                [1.0, 0.0, 0.0, dt, 0.0, 0.0],
-                [0.0, 1.0, 0.0, 0.0, dt, 0.0],
-                [0.0, 0.0, 1.0, 0.0, 0.0, dt],
-                [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-                [0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
-                [0.0, 0.0, 0.0, 0.0, 0.0, 1.0],
-            ],
-            dtype=np.float32,
-        )
-        kalman.measurementMatrix = np.array(
-            [
-                [1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-                [0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
-                [0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
-            ],
-            dtype=np.float32,
-        )
-        kalman.processNoiseCov = np.eye(6, dtype=np.float32) * process_noise
-        kalman.measurementNoiseCov = np.eye(3, dtype=np.float32) * measurement_noise
-        kalman.errorCovPost = np.eye(6, dtype=np.float32)
-        return kalman
-
-    def _initialize_filter(self, kalman, measurement: np.ndarray) -> None:
-        kalman.statePost = np.array(
-            [
-                [measurement[0, 0]],
-                [measurement[1, 0]],
-                [measurement[2, 0]],
-                [0.0],
-                [0.0],
-                [0.0],
-            ],
-            dtype=np.float32,
-        )
-        kalman.statePre = kalman.statePost.copy()
-
-    def update(self, rvec: np.ndarray, tvec: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-        rotation_measurement = rvec.reshape(3, 1).astype(np.float32)
-        translation_measurement = tvec.reshape(3, 1).astype(np.float32)
-
-        if not self.initialized:
-            self._initialize_filter(self.rotation_filter, rotation_measurement)
-            self._initialize_filter(self.translation_filter, translation_measurement)
-            self.initialized = True
-        else:
-            self.rotation_filter.predict()
-            self.translation_filter.predict()
-
-        filtered_rotation = self.rotation_filter.correct(rotation_measurement)[:3]
-        filtered_translation = self.translation_filter.correct(translation_measurement)[:3]
-        return filtered_rotation.reshape(3, 1), filtered_translation.reshape(3, 1)
-
-
 class ArucoTfNode(Node):
     def __init__(self) -> None:
         super().__init__("aruco_tf_node")
@@ -166,9 +107,6 @@ class ArucoTfNode(Node):
         self.declare_parameter("processing_scale", 1.0)
         self.declare_parameter("frame_skip", 0)
         self.declare_parameter("use_grayscale", True)
-        self.declare_parameter("enable_kalman_filter", True)
-        self.declare_parameter("kalman_process_noise", 1e-4)
-        self.declare_parameter("kalman_measurement_noise", 5e-3)
 
         video_device_param = self.get_parameter("video_device").get_parameter_value().string_value
         dictionary_name = self.get_parameter("aruco_dictionary").get_parameter_value().string_value
@@ -185,16 +123,11 @@ class ArucoTfNode(Node):
         self.processing_scale = self.get_parameter("processing_scale").get_parameter_value().double_value
         self.frame_skip = self.get_parameter("frame_skip").get_parameter_value().integer_value
         self.use_grayscale = self.get_parameter("use_grayscale").get_parameter_value().bool_value
-        self.enable_kalman_filter = self.get_parameter("enable_kalman_filter").get_parameter_value().bool_value
-        self.kalman_process_noise = self.get_parameter("kalman_process_noise").get_parameter_value().double_value
-        self.kalman_measurement_noise = self.get_parameter("kalman_measurement_noise").get_parameter_value().double_value
 
         if self.processing_scale <= 0.0 or self.processing_scale > 1.0:
             raise ValueError("processing_scale must be in the range (0.0, 1.0].")
         if self.frame_skip < 0:
             raise ValueError("frame_skip must be greater than or equal to 0.")
-        if self.kalman_process_noise <= 0.0 or self.kalman_measurement_noise <= 0.0:
-            raise ValueError("Kalman noise parameters must be greater than 0.")
 
         if dictionary_name not in ARUCO_DICTIONARIES:
             valid = ", ".join(sorted(ARUCO_DICTIONARIES))
@@ -211,7 +144,7 @@ class ArucoTfNode(Node):
         self.calibrated_camera_matrix = None
         self.calibrated_dist_coeffs = None
         self.frame_counter = 0
-        self.pose_filters = {}
+        calibration_file = self.resolve_calibration_file(calibration_file)
         if calibration_file:
             self.calibrated_camera_matrix, self.calibrated_dist_coeffs = self.load_calibration(calibration_file)
 
@@ -237,8 +170,7 @@ class ArucoTfNode(Node):
             self.get_logger().info("No calibration file provided; assuming the camera image is already corrected.")
         self.get_logger().info(
             f"capture_fps={capture_fps}, processing_scale={self.processing_scale}, "
-            f"frame_skip={self.frame_skip}, use_grayscale={self.use_grayscale}, "
-            f"enable_kalman_filter={self.enable_kalman_filter}"
+            f"frame_skip={self.frame_skip}, use_grayscale={self.use_grayscale}"
         )
 
     def open_capture(self, video_device: str) -> cv2.VideoCapture:
@@ -247,6 +179,18 @@ class ArucoTfNode(Node):
         if not capture.isOpened():
             raise RuntimeError(f"Could not open video device '{video_device}'")
         return capture
+
+    def resolve_calibration_file(self, calibration_file: str) -> str:
+        if calibration_file:
+            return calibration_file
+
+        default_calibration = (
+            Path(get_package_share_directory(PACKAGE_NAME)) / DEFAULT_CALIBRATION_FILE
+        )
+        if default_calibration.is_file():
+            return str(default_calibration)
+
+        return ""
 
     def load_calibration(self, calibration_file: str) -> tuple[np.ndarray, np.ndarray]:
         calibration_path = Path(calibration_file)
@@ -365,17 +309,6 @@ class ArucoTfNode(Node):
 
                 if not success:
                     continue
-
-                if self.enable_kalman_filter:
-                    pose_filter = self.pose_filters.get(marker_id)
-                    if pose_filter is None:
-                        pose_filter = PoseKalmanFilter(
-                            dt=1.0 / max(1.0, self.capture_fps),
-                            process_noise=float(self.kalman_process_noise),
-                            measurement_noise=float(self.kalman_measurement_noise),
-                        )
-                        self.pose_filters[marker_id] = pose_filter
-                    rvec, tvec = pose_filter.update(rvec, tvec)
 
                 rotation_matrix, _ = cv2.Rodrigues(rvec)
                 quaternion = rotation_matrix_to_quaternion(rotation_matrix)

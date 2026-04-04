@@ -6,7 +6,7 @@ ROS 2 Python package that detects ArUco markers from a local camera device and p
 
 - Uses the OpenCV ArUco detector pattern from `aruco_detect.py`
 - Reads frames directly from `/dev/video0` or another user-specified device
-- Optionally loads camera intrinsics and distortion from a calibration file
+- Loads camera intrinsics and distortion from the packaged `camera_calibration.yaml` by default
 - Estimates pose with `cv2.solvePnP`
 - Publishes TF frames named `aruco_<id>` for every marker detected in the current frame
 - Publishes the full list of currently detected marker IDs on a ROS topic
@@ -109,11 +109,13 @@ Run with a calibration file:
 ros2 run ros2_aruco_position aruco_tf_node --ros-args -p camera_calibration_file:=/path/to/camera.yaml
 ```
 
+If `camera_calibration_file` is left empty, the node automatically loads the packaged calibration file from `share/ros2_aruco_position/camera_calibration.yaml`.
+
 ## Key Parameters
 
 - `video_device`: device path like `/dev/video0` or an index like `0`
 - `camera_frame`: TF parent frame
-- `camera_calibration_file`: OpenCV-style calibration YAML with `camera_matrix` and distortion coefficients
+- `camera_calibration_file`: OpenCV-style calibration YAML with `camera_matrix` and distortion coefficients; defaults to the packaged `camera_calibration.yaml`
 - `detected_ids_topic`: topic publishing `std_msgs/msg/Int32MultiArray` of visible marker IDs
 - `marker_length`: marker size in meters
 - `aruco_dictionary`: OpenCV dictionary name such as `DICT_4X4_50`
@@ -123,6 +125,5 @@ ros2 run ros2_aruco_position aruco_tf_node --ros-args -p camera_calibration_file
 - `processing_scale`: downscale factor for marker detection, between `0.0` and `1.0`
 - `frame_skip`: process every `frame_skip + 1` frames
 - `use_grayscale`: detect markers on grayscale images to reduce CPU load
-- `enable_kalman_filter`: enables per-marker pose smoothing before TF publication
-- `kalman_process_noise`: higher values make the filter react faster to motion
-- `kalman_measurement_noise`: lower values trust the raw pose estimate more and reduce lag
+
+Marker poses are published directly from each raw `solvePnP` result without Kalman smoothing.
