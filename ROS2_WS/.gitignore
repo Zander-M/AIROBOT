@@ -1,8 +1,0 @@
-# ROS 2 colcon biuld artifacts
-build/
-install/
-log/
-
-# Editor/OS cruft
-*.swp
-*.DS_Store
