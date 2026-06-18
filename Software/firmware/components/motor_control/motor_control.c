@@ -11,6 +11,7 @@
 
 #include "esp_log.h"
 #include "motor_control.h"
+#include "battery.h"
 #include "wheels.h"
 #include "robot_params.h"
 
@@ -30,21 +31,21 @@ void motor_init(void){
 }
 
 void setMotorFromTwist(geometry_msgs__msg__Twist* msg) {
-    // obtain Twist
-    float v = msg->linear.x;
-    float w = msg->angular.z;
+    if (!low_battery) {
+        // obtain Twist
+        float v = msg->linear.x;
+        float w = msg->angular.z;
 
-    // Convert to angular velocity (rad/s)
-    float wl = (v-w*(WHEEL_BASE/ 2.0f)) / WHEEL_RADIUS;
-    float wr = (v+w*(WHEEL_BASE/ 2.0f)) / WHEEL_RADIUS;
+        // Convert to angular velocity (rad/s)
+        float wl = (v-w*(WHEEL_BASE/ 2.0f)) / WHEEL_RADIUS;
+        float wr = (v+w*(WHEEL_BASE/ 2.0f)) / WHEEL_RADIUS;
 
-    float l_tps = radps_to_ticks(wl);
-    float r_tps = radps_to_ticks(wr);
+        float l_tps = radps_to_ticks(wl);
+        float r_tps = radps_to_ticks(wr);
 
-    setLeftTarget(l_tps);
-    setRightTarget(r_tps);
-    // printf("Twist: v=%.2f m/s, w=%.2f rad/s | Targets: L=%.2f tps, R=%.2f tps\n",
-    //        v, w, l_tps, r_tps);
+        setLeftTarget(l_tps);
+        setRightTarget(r_tps);
+    }
 }
 
 void motor_update_task(void *arg) {
@@ -52,7 +53,14 @@ void motor_update_task(void *arg) {
     TickType_t last = xTaskGetTickCount();
 
     while (1) {
-        wheel_run();  // PID + PWM update
-        vTaskDelayUntil(&last, period);
+        if (!low_battery) {
+            wheel_run();  // PID + PWM update
+            vTaskDelayUntil(&last, period);
+        } else {
+            setLeftTarget(0);
+            setRightTarget(0);
+            wheel_run();  // PID + PWM update
+            vTaskDelayUntil(&last, period);
+        }
     }
 }

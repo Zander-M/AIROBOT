@@ -8,6 +8,7 @@
 #include "motor_control.h"
 #include "ota.h"
 #include "led.h"
+#include "battery.h"
 
 
 #include <uros_network_interfaces.h>
@@ -20,6 +21,22 @@
 #include "led_strip.h"
 #include "driver/rmt_tx.h"
 #endif
+
+static void battery_led_task(void *arg) {
+    while (1) {
+        if (low_battery) {
+            for (int i = 0; i < 3; i++) {
+                led_set_all(255, 0, 0);
+                vTaskDelay(pdMS_TO_TICKS(300));
+                led_clear();
+                vTaskDelay(pdMS_TO_TICKS(300));
+            }
+            vTaskDelay(pdMS_TO_TICKS(3000));
+        } else {
+            vTaskDelay(pdMS_TO_TICKS(100));
+        }
+    }
+}
 
 void app_main(void){
 
@@ -37,6 +54,11 @@ void app_main(void){
 
     // OTA 
     // ota_init();
+
+    // Battery
+    battery_init();
+    xTaskCreate(battery_read_task, "battery_update", 4096, NULL, 5, NULL);
+    xTaskCreate(battery_led_task, "battery_led", 2048, NULL, 4, NULL);
 
     // ROS task
     // Run ROS in FreeRTOS stack

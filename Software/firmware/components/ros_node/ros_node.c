@@ -8,6 +8,7 @@
 #include "motor_control.h"
 #include "wheels.h"
 #include "led.h"
+#include "battery.h"
 
 #include <rcl/rcl.h>
 #include <rclc/rclc.h>
@@ -15,6 +16,7 @@
 #include <geometry_msgs/msg/twist.h>
 #include <std_msgs/msg/color_rgba.h>
 #include <std_msgs/msg/int64_multi_array.h>
+#include <std_msgs/msg/float32.h>
 
 #ifdef CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE
 	#include <rmw_microros/rmw_microros.h>
@@ -33,13 +35,18 @@
 void cmd_vel_callback(const void *msgin);
 void timer_callback(rcl_timer_t *timer, int64_t last_call_time);
 void led_callback(const void *msgin);
+void battery_pub_callback(rcl_timer_t *timer, int64_t last_call_time);
 
 geometry_msgs__msg__Twist vel_msg;
 std_msgs__msg__ColorRGBA led_msg;
 std_msgs__msg__Int64MultiArray enc_msg;
+std_msgs__msg__Float32 battery_msg;
 
 static int64_t enc_data[2]; // [left, right]
+static float battery_level;
+
 rcl_publisher_t encoder_pub;
+rcl_publisher_t battery_pub;
 
 
 
@@ -95,6 +102,15 @@ void ros_task(void *arg) {
     enc_msg.data.size = 2;
     enc_msg.data.capacity = 2;
 
+    RCCHECK(rclc_publisher_init_default(
+        &battery_pub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Float32),
+        "battery_level"
+    ));
+
+    battery_msg.data = battery_level;
+
     // Create subscriber
     rcl_subscription_t vel_sub;
     RCCHECK(rclc_subscription_init_default(
@@ -114,12 +130,17 @@ void ros_task(void *arg) {
     rcl_timer_t timer;
     RCCHECK(rclc_timer_init_default(&timer, &support, RCL_MS_TO_NS(100), timer_callback));
 
+    rcl_timer_t battery_timer;
+    RCCHECK(rclc_timer_init_default(&battery_timer, &support, RCL_MS_TO_NS(1000), battery_pub_callback));
+
+
     // Executor
     rclc_executor_t executor;
-    RCCHECK(rclc_executor_init(&executor, &support.context, 3, &allocator));
+    RCCHECK(rclc_executor_init(&executor, &support.context, 4, &allocator));
     RCCHECK(rclc_executor_add_subscription(&executor, &vel_sub, &vel_msg, &cmd_vel_callback, ON_NEW_DATA));
     RCCHECK(rclc_executor_add_subscription(&executor, &led_sub, &led_msg, &led_callback, ON_NEW_DATA));
     RCCHECK(rclc_executor_add_timer(&executor, &timer));
+    RCCHECK(rclc_executor_add_timer(&executor, &battery_timer));
 
     while (1) {
         rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
@@ -156,4 +177,12 @@ void led_callback(const void *msgin){
     ESP_LOGI("ros_node", "Received /led_color: R=%d G=%d B=%d", r, g, b);
     led_set_pixel(0, r, g, b);
     led_refresh();
+}
+
+void battery_pub_callback(rcl_timer_t *timer, int64_t last_call_time) {
+    (void) last_call_time;
+    BatteryState battery_state = battery_get_state();
+    battery_msg.data = battery_state.percentage;
+    // battery_msg.data = battery_state.filtered_voltage;
+    rcl_publish(&battery_pub, &battery_msg, NULL);
 }
