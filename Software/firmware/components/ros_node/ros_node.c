@@ -81,6 +81,14 @@ void ros_task(void *arg) {
 		// Static Agent IP and port can be used instead of autodisvery.
 		RCCHECK(rmw_uros_options_set_udp_address(CONFIG_MICRO_ROS_AGENT_IP, CONFIG_MICRO_ROS_AGENT_PORT, rmw_options));
 	//RCCHECK(rmw_uros_discover_agent(rmw_options));
+
+		// Derive a stable client key from the MAC address so the agent reuses
+		// the same XRCE session across reboots instead of creating a new client.
+		uint8_t mac[6];
+		esp_read_mac(mac, ESP_MAC_WIFI_STA);
+		uint32_t client_key = ((uint32_t)mac[2] << 24) | ((uint32_t)mac[3] << 16) |
+		                      ((uint32_t)mac[4] << 8)  |  (uint32_t)mac[5];
+		RCCHECK(rmw_uros_options_set_client_key(client_key, rmw_options));
 	#endif
 
     RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
