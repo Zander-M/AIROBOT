@@ -39,6 +39,8 @@ float r_eintegral = 0;
 // PID parameter
 static PIDConfig pid = {1.0f, 0.0f, 0.0f};
 
+#define INTEGRAL_MAX 500.0f  // ticks — prevents windup when robot is stalled
+
 // ISR Handlers for encoder reading
 static void IRAM_ATTR readLeftEncoder(void* arg){
     int b = gpio_get_level(E1B);
@@ -169,9 +171,9 @@ void wheel_run() {
     float l_err = l_target_speed - l_speed;
     float r_err = r_target_speed - r_speed;
 
-    // integral
-    l_eintegral += l_err * dt;
-    r_eintegral += r_err * dt;
+    // integral (clamped to prevent windup on stall)
+    l_eintegral = fmaxf(-INTEGRAL_MAX, fminf(INTEGRAL_MAX, l_eintegral + l_err * dt));
+    r_eintegral = fmaxf(-INTEGRAL_MAX, fminf(INTEGRAL_MAX, r_eintegral + r_err * dt));
 
     // derivative
     float l_deriv = (l_err - l_eprev) / dt;

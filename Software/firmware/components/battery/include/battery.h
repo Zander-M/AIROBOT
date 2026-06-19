@@ -20,12 +20,12 @@
 #define ADC_CHAN0    ADC1_CHANNEL_7
 #define ADC_ATTEN    ADC_ATTEN_DB_0
 
-// Voltage Reading 
+// Voltage Reading
 #define V_MIN 3.4f
 #define V_MAX 4.2f
-#define LOW_BATTERY_CUTOFF_V 3.4f
-#define V_ATTEN_MAX 1.100f
-#define ADC_TO_BATTERY_VOLTAGE(adc) ((float)adc* V_ATTEN_MAX / 4095.0f / 10.0f * 57.0f)
+#define LOW_BATTERY_CUTOFF_V  3.40f  // triggers low-battery at or below this
+#define LOW_BATTERY_RECOVER_V 3.55f  // clears low-battery only after rising above this
+#define VOLTAGE_EMA_ALPHA 0.2f       // EMA smoothing factor for battery voltage (0=no update, 1=no filter)
 
 typedef struct {
     float voltage;
@@ -41,8 +41,9 @@ void battery_read_task(void* args); // Callback
 
 BatteryState battery_get_state(void);
 
-// Helper function
+// Helper functions
 
+// Clamps voltage into [V_MIN, V_MAX] so percentage stays 0–100%
 static inline float filter_voltage(float voltage) {
     return fmaxf(fminf(V_MAX, voltage), V_MIN);
 }

@@ -28,7 +28,10 @@
 #include "esp_log.h"
 #include "esp_system.h"
 #include "esp_mac.h"
+#include "esp_timer.h"
 #endif
+
+#define CMD_VEL_TIMEOUT_US 500000LL  // stop motors after 500ms without a cmd_vel
 
 // Callback declaration
 
@@ -44,6 +47,7 @@ std_msgs__msg__Float32 battery_msg;
 
 static int64_t enc_data[2]; // [left, right]
 static float battery_level;
+static int64_t last_cmd_vel_us = 0;
 
 rcl_publisher_t encoder_pub;
 rcl_publisher_t battery_pub;
@@ -154,10 +158,16 @@ void cmd_vel_callback(const void * msgin){
     printf("Received /cmd_vel: linear=%.2f angular=%.2f\n",
            msg->linear.x, msg->angular.z);
     vel_msg = *msg;
+    last_cmd_vel_us = esp_timer_get_time();
 }
 
 void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {
     (void) last_call_time;
+
+    if (esp_timer_get_time() - last_cmd_vel_us > CMD_VEL_TIMEOUT_US) {
+        vel_msg.linear.x = 0.0f;
+        vel_msg.angular.z = 0.0f;
+    }
 
     setMotorFromTwist(&vel_msg);
     int64_t l, r;
