@@ -1,0 +1,179 @@
+/*
+    Micro-ROS related code
+*/
+
+#include <stdio.h>
+
+#include "ros_node.h"
+#include "motor_control.h"
+#include "wheels.h"
+#include "led.h"
+#include "battery.h"
+
+#include <rcl/rcl.h>
+#include <rclc/rclc.h>
+#include <rclc/executor.h>
+#include <geometry_msgs/msg/twist.h>
+#include <std_msgs/msg/color_rgba.h>
+#include <std_msgs/msg/int64_multi_array.h>
+
+#ifdef CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE
+	#include <rmw_microros/rmw_microros.h>
+#endif
+
+#ifdef ESP_PLATFORM
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_log.h"
+#include "esp_system.h"
+#include "esp_mac.h"
+#include "esp_timer.h"
+#endif
+
+#define CMD_VEL_TIMEOUT_US 500000LL  // stop motors after 500ms without a cmd_vel
+
+// Callback declaration
+
+void cmd_vel_callback(const void *msgin);
+void timer_callback(rcl_timer_t *timer, int64_t last_call_time);
+void led_callback(const void *msgin);
+geometry_msgs__msg__Twist vel_msg;
+std_msgs__msg__ColorRGBA led_msg;
+std_msgs__msg__Int64MultiArray enc_msg;
+
+static int64_t enc_data[2]; // [left, right]
+static int64_t last_cmd_vel_us = 0;
+
+rcl_publisher_t encoder_pub;
+
+
+
+static void make_robot_namespace(char *ns, size_t ns_len) {
+    // Create namespace using mac address
+    uint8_t mac[6];
+    esp_read_mac(mac, ESP_MAC_WIFI_STA);
+
+    // Example: /r_a1b2c3  (last 3 bytes, usually enough uniqueness)
+    snprintf(ns, ns_len, "/r_%02x%02x%02x", mac[3], mac[4], mac[5]);
+}
+
+static void make_node_name(char *name, size_t name_len) {
+    uint8_t mac[6];
+    esp_read_mac(mac, ESP_MAC_WIFI_STA);
+    snprintf(name, name_len, "esp32_diffdrive_%02x%02x%02x", mac[3], mac[4], mac[5]);
+}
+
+void ros_task(void *arg) {
+    // Init micro-ROS support
+    rcl_allocator_t allocator = rcl_get_default_allocator();
+    rclc_support_t support;
+    rcl_init_options_t init_options = rcl_get_zero_initialized_init_options();
+    RCCHECK(rcl_init_options_init(&init_options, allocator));
+
+	#ifdef CONFIG_MICRO_ROS_ESP_XRCE_DDS_MIDDLEWARE
+		rmw_init_options_t* rmw_options = rcl_init_options_get_rmw_init_options(&init_options);
+		// Static Agent IP and port can be used instead of autodisvery.
+		RCCHECK(rmw_uros_options_set_udp_address(CONFIG_MICRO_ROS_AGENT_IP, CONFIG_MICRO_ROS_AGENT_PORT, rmw_options));
+	//RCCHECK(rmw_uros_discover_agent(rmw_options));
+
+		// Derive a stable client key from the MAC address so the agent reuses
+		// the same XRCE session across reboots instead of creating a new client.
+		uint8_t mac[6];
+		esp_read_mac(mac, ESP_MAC_WIFI_STA);
+		uint32_t client_key = ((uint32_t)mac[2] << 24) | ((uint32_t)mac[3] << 16) |
+		                      ((uint32_t)mac[4] << 8)  |  (uint32_t)mac[5];
+		RCCHECK(rmw_uros_options_set_client_key(client_key, rmw_options));
+	#endif
+
+    RCCHECK(rclc_support_init_with_options(&support, 0, NULL, &init_options, &allocator));
+
+    // Create ros node
+    rcl_node_t node;
+    char ns[32];
+    char node_name[64];
+    make_robot_namespace(ns, sizeof(ns));
+    make_node_name(node_name, sizeof(node_name));
+
+    RCCHECK(rclc_node_init_default(&node, node_name, ns, &support));
+    
+    // Create Publisher
+    RCCHECK(rclc_publisher_init_default(
+        &encoder_pub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, Int64MultiArray),
+        "enc_counts"
+    ));
+
+    enc_msg.data.data = enc_data;
+    enc_msg.data.size = 2;
+    enc_msg.data.capacity = 2;
+
+    // Create subscriber
+    rcl_subscription_t vel_sub;
+    RCCHECK(rclc_subscription_init_default(
+        &vel_sub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(geometry_msgs, msg, Twist),
+        "cmd_vel"));
+
+    rcl_subscription_t led_sub;
+    RCCHECK(rclc_subscription_init_default(
+        &led_sub,
+        &node,
+        ROSIDL_GET_MSG_TYPE_SUPPORT(std_msgs, msg, ColorRGBA),
+        "led_color"));
+
+    // Timer
+    rcl_timer_t timer;
+    RCCHECK(rclc_timer_init_default(&timer, &support, RCL_MS_TO_NS(100), timer_callback));
+
+    // Executor
+    rclc_executor_t executor;
+    RCCHECK(rclc_executor_init(&executor, &support.context, 3, &allocator));
+    RCCHECK(rclc_executor_add_subscription(&executor, &vel_sub, &vel_msg, &cmd_vel_callback, ON_NEW_DATA));
+    RCCHECK(rclc_executor_add_subscription(&executor, &led_sub, &led_msg, &led_callback, ON_NEW_DATA));
+    RCCHECK(rclc_executor_add_timer(&executor, &timer));
+
+    while (1) {
+        rclc_executor_spin_some(&executor, RCL_MS_TO_NS(10));
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
+}
+
+//Callbacks
+void cmd_vel_callback(const void * msgin){
+    const geometry_msgs__msg__Twist *msg = (const geometry_msgs__msg__Twist *)msgin;
+    printf("Received /cmd_vel: linear=%.2f angular=%.2f\n",
+           msg->linear.x, msg->angular.z);
+    vel_msg = *msg;
+    last_cmd_vel_us = esp_timer_get_time();
+}
+
+void timer_callback(rcl_timer_t *timer, int64_t last_call_time) {
+    (void) last_call_time;
+
+    if (esp_timer_get_time() - last_cmd_vel_us > CMD_VEL_TIMEOUT_US) {
+        vel_msg.linear.x = 0.0f;
+        vel_msg.angular.z = 0.0f;
+    }
+
+    setMotorFromTwist(&vel_msg);
+    int64_t l, r;
+    wheel_get_counts(&l, &r);
+    enc_data[0] = l;
+    enc_data[1] = r;
+    rcl_publish(&encoder_pub, &enc_msg, NULL);
+}
+
+void led_callback(const void *msgin){
+    const std_msgs__msg__ColorRGBA *msg = (const std_msgs__msg__ColorRGBA *)msgin;
+
+    uint8_t r = (uint8_t)(msg->r * 255.0f);
+    uint8_t g = (uint8_t)(msg->g * 255.0f);
+    uint8_t b = (uint8_t)(msg->b * 255.0f);
+
+    ESP_LOGI("ros_node", "Received /led_color: R=%d G=%d B=%d", r, g, b);
+    led_set_pixel(0, r, g, b);
+    led_refresh();
+}
+
